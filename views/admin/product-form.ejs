@@ -1,0 +1,19 @@
+<%- include('partials-top') %><div class="admin-card"><h3><%= item ? 'Edit Product' : 'Create Product' %></h3><form method="post" action="<%= item ? '/admin/products/' + item.id + '/edit' : '/admin/products/create' %>"><div class="row">
+<div class="col-md-6"><div class="form-group"><label>Name</label><input class="input" name="name" value="<%= item?.name || '' %>"></div></div>
+<div class="col-md-6"><div class="form-group"><label>Slug</label><input class="input" name="slug" value="<%= item?.slug || '' %>"></div></div>
+<div class="col-md-6"><div class="form-group"><label>Category</label><input class="input" name="category" value="<%= item?.category || '' %>"></div></div>
+<div class="col-md-6"><div class="form-group"><label>Brand</label><input class="input" name="brand" value="<%= item?.brand || '' %>"></div></div>
+<div class="col-md-3"><div class="form-group"><label>Status</label><select class="input" name="status"><option value="ready" <%= item?.status==='ready'?'selected':'' %>>ready</option><option value="sold_out" <%= item?.status==='sold_out'?'selected':'' %>>sold_out</option></select></div></div>
+<div class="col-md-3"><div class="form-group"><label>Price THB</label><input class="input" name="price_thb" value="<%= item?.price_thb || 0 %>"></div></div>
+<div class="col-md-3"><div class="form-group"><label>Price IDR</label><input class="input" name="price_idr" value="<%= item?.price_idr || 0 %>"></div></div>
+<div class="col-md-3"><div class="form-group"><label>Compare THB</label><input class="input" name="compare_price_thb" value="<%= item?.compare_price_thb || 0 %>"></div></div>
+<div class="col-md-3"><div class="form-group"><label>Compare IDR</label><input class="input" name="compare_price_idr" value="<%= item?.compare_price_idr || 0 %>"></div></div>
+<div class="col-md-9"><div class="form-group"><label>Thumbnail URL</label><input class="input" name="thumbnail" value="<%= item?.thumbnail || '' %>"></div></div>
+<div class="col-md-12"><div class="form-group"><label>Images URL (pisah baris atau koma)</label><textarea class="input textarea-lg" name="images"><%= item?.images?.join('
+') || '' %></textarea></div></div>
+<div class="col-md-12"><div class="form-group"><label>Short Description</label><textarea class="input" name="short_description"><%= item?.short_description || '' %></textarea></div></div>
+<div class="col-md-12"><div class="form-group"><label>Description HTML</label><textarea class="input textarea-lg" name="description"><%= item?.description || '' %></textarea></div></div>
+<div class="col-md-12"><div class="form-group"><label>Details HTML</label><textarea class="input textarea-lg" name="details"><%= item?.details || '' %></textarea></div></div>
+<div class="col-md-12"><label><input type="checkbox" name="featured" <%= item?.featured ? 'checked' : '' %>> Featured</label> <label><input type="checkbox" name="recommended" <%= item?.recommended ? 'checked' : '' %>> Recommended</label> <label><input type="checkbox" name="visible" <%= item?.visible !== false ? 'checked' : '' %>> Visible</label></div>
+<div class="col-md-12 mt-15"><button class="primary-btn">Save</button></div>
+</div></form></div><%- include('partials-bottom') %>
