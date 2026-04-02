@@ -71,13 +71,12 @@
             </a>
           </div>
 
-          <div class="menu-toggle">
-            <a href="#responsive-nav">
-              <i class="fa fa-bars"></i>
-              <span>Menu</span>
-            </a>
-          </div>
-        </div>
+<div class="menu-toggle">
+  <a href="javascript:void(0)" id="mobile-menu-toggle" aria-label="Buka menu">
+    <i class="fa fa-bars"></i>
+    <span>Menu</span>
+  </a>
+</div>
 
       </div>
     </div>
@@ -86,8 +85,14 @@
 
 <nav id="navigation">
   <div class="container">
-    <div id="responsive-nav">
-      <ul class="main-nav nav navbar-nav">
+    <div id="responsive-nav"><div id="responsive-nav">
+  <div class="mobile-nav-header">
+    <span>Menu</span>
+    <button type="button" id="mobile-menu-close" class="mobile-menu-close" aria-label="Tutup menu">
+      <i class="fa fa-times"></i>
+    </button>
+  </div>
+  <ul class="main-nav nav navbar-nav">
         <li class="<%= currentPath === '/' ? 'active' : '' %>"><a href="/">Home</a></li>
         <li class="<%= currentPath.startsWith('/shop') ? 'active' : '' %>"><a href="/shop">Shop</a></li>
         <li class="<%= currentPath.startsWith('/articles') ? 'active' : '' %>"><a href="/articles">Artikel</a></li>
