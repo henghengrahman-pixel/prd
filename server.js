@@ -28,6 +28,7 @@ async function bootstrap() {
 
   app.use(express.urlencoded({ extended: true, limit: '5mb' }));
   app.use(express.json({ limit: '5mb' }));
+
   app.use(session({
     secret: process.env.SESSION_SECRET || 'development-secret',
     resave: false,
@@ -35,17 +36,21 @@ async function bootstrap() {
     cookie: {
       httpOnly: true,
       sameSite: 'lax',
-      secure: isProduction
+      secure: false
     }
   }));
+
   app.use(flash());
   app.use(express.static(PUBLIC_DIR, { maxAge: isProduction ? '7d' : 0 }));
   app.use(localsMiddleware);
 
   app.use('/', systemRoutes);
-  app.use('/', siteRoutes);
+
+  // admin harus di atas siteRoutes
   app.use(`/${adminPath}`, authRoutes);
   app.use(`/${adminPath}`, adminRoutes);
+
+  app.use('/', siteRoutes);
 
   app.use((req, res) => {
     res.status(404).render('404', {
@@ -56,14 +61,20 @@ async function bootstrap() {
     });
   });
 
+  app.use((err, req, res, next) => {
+    console.error('APP ERROR:', err);
+    res.status(500).send(`<pre>${err.stack}</pre>`);
+  });
+
   const port = Number(process.env.PORT || 3000);
   app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
     console.log(`Admin path: /${adminPath}`);
+    console.log(`DATA_DIR: ${DATA_DIR}`);
   });
 }
 
 bootstrap().catch((error) => {
-  console.error(error);
+  console.error('BOOTSTRAP ERROR:', error);
   process.exit(1);
 });
