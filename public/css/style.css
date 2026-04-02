@@ -605,3 +605,379 @@ textarea.input:focus,
     border-radius: 14px;
   }
 }
+
+/* =========================================
+   SAFE PATCH FIX
+   tempel di paling bawah style.css
+========================================= */
+
+/* body lebih ringan */
+body {
+  background: #f7f7fa;
+  color: #2B2D42;
+}
+
+/* section jangan terlalu kosong */
+.section {
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+/* top header */
+#top-header {
+  background-color: #1b1d27;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.header-links li {
+  font-size: 12px;
+}
+
+.header-links li i {
+  color: #ef233c;
+}
+
+/* main header */
+#header {
+  background-color: #11141c;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.header-logo {
+  float: left;
+  padding-top: 8px;
+}
+
+.header-logo .logo img {
+  max-height: 42px;
+  width: auto;
+}
+
+/* search bar - tetap pakai struktur asli template */
+.header-search {
+  padding: 10px 0;
+}
+
+.header-search form .input-select {
+  height: 44px;
+  border: none;
+  border-right: 1px solid #ececf2;
+  border-radius: 24px 0 0 24px;
+  padding: 0 18px;
+  min-width: 180px;
+  background: #fff;
+}
+
+.header-search form .input {
+  height: 44px;
+  border: none;
+  background: #fff;
+  padding: 0 18px;
+}
+
+.header-search form .search-btn {
+  height: 44px;
+  width: 108px;
+  border-radius: 0 24px 24px 0;
+  background: #ef233c;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.header-search form .search-btn:hover {
+  background: #d90429;
+}
+
+/* account/cart kanan */
+.header-ctn {
+  float: right;
+  padding: 10px 0;
+}
+
+.header-ctn > div + div {
+  margin-left: 10px;
+}
+
+.header-ctn > div > a {
+  width: 82px;
+  color: #fff;
+}
+
+.header-ctn > div > a > i {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.header-ctn > div > a > span {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.header-ctn > div > a > .qty {
+  right: 18px;
+  top: -8px;
+  background-color: #ef233c;
+}
+
+/* dropdown cart fix */
+.cart-dropdown {
+  width: 280px;
+  right: 0;
+  top: 100%;
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 14px;
+  box-shadow: 0 14px 35px rgba(0,0,0,0.18);
+  border: 1px solid #e7e9ef;
+  background: #fff;
+  z-index: 999;
+}
+
+.cart-dropdown .cart-list {
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.cart-dropdown .cart-summary {
+  border-top: 1px solid #eceef3;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.cart-dropdown .cart-summary small {
+  color: #8D99AE;
+}
+
+.cart-dropdown .cart-summary h5 {
+  margin: 6px 0 0;
+  color: #2B2D42;
+}
+
+.cart-dropdown .cart-btns {
+  margin: 0 -14px -14px;
+}
+
+.cart-dropdown .cart-btns > a {
+  padding: 12px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.cart-dropdown .cart-btns > a:first-child {
+  background: #1b1d27;
+}
+
+.cart-dropdown .cart-btns > a:last-child {
+  background: #ef233c;
+}
+
+/* navigation */
+#navigation {
+  background: #fff;
+  border-top: 2px solid #ef233c;
+  border-bottom: 1px solid #e6e9ef;
+}
+
+.main-nav > li + li {
+  margin-left: 26px;
+}
+
+.main-nav > li > a {
+  padding: 18px 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.main-nav > li > a:hover,
+.main-nav > li > a:focus,
+.main-nav > li.active > a {
+  color: #ef233c;
+}
+
+.main-nav > li > a:after {
+  height: 2px;
+  background-color: #ef233c;
+}
+
+/* shop banner jangan terlalu solid */
+.shop {
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 12px 0;
+  box-shadow: 0 8px 24px rgba(43,45,66,0.08);
+}
+
+.shop:before {
+  background: #d10024;
+  opacity: 0.72;
+}
+
+.shop:after {
+  background: #d10024;
+  opacity: 0.32;
+}
+
+.shop .shop-img {
+  background: #eceff4;
+}
+
+.shop .shop-img > img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.shop .shop-body {
+  padding: 24px;
+}
+
+.shop .shop-body h3 {
+  font-size: 18px;
+  line-height: 1.25;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.shop .shop-body .cta-btn {
+  font-weight: 700;
+  color: #fff;
+}
+
+/* product card lebih ringan */
+.product {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #eceef3;
+  box-shadow: 0 6px 18px rgba(43,45,66,0.06);
+}
+
+.product:hover {
+  box-shadow: 0 10px 24px rgba(43,45,66,0.09);
+}
+
+.product .product-img {
+  background: #f3f5f8;
+}
+
+.product .product-img > img {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.product .product-body {
+  padding: 16px;
+}
+
+.product .product-body .product-name {
+  min-height: 40px;
+}
+
+.product .product-body .product-price {
+  color: #ef233c;
+  font-weight: 700;
+}
+
+.product .product-body .product-price .product-old-price {
+  color: #98a2b3;
+}
+
+.product .add-to-cart {
+  background: #141722;
+}
+
+.product .add-to-cart .add-to-cart-btn {
+  background-color: #ef233c;
+}
+
+/* product detail */
+.product-details {
+  padding-top: 10px;
+}
+
+.product-details .product-name {
+  font-size: 28px;
+  line-height: 1.25;
+}
+
+.product-details .product-price {
+  font-size: 22px;
+  color: #ef233c;
+}
+
+.product-details .product-price .product-old-price {
+  color: #98a2b3;
+}
+
+.product-details .add-to-cart .add-to-cart-btn {
+  background-color: #ef233c;
+}
+
+/* input umum */
+.input,
+.input-select,
+textarea.input,
+.input-number input[type="number"] {
+  box-shadow: none;
+}
+
+.input:focus,
+.input-select:focus,
+textarea.input:focus,
+.input-number input[type="number"]:focus {
+  outline: none;
+  border-color: #ef233c;
+}
+
+/* sold out button */
+.add-to-cart-btn[disabled] {
+  background: #cbd5e1 !important;
+  border-color: #cbd5e1 !important;
+  color: #fff !important;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+/* mobile */
+@media only screen and (max-width: 991px) {
+  .header-logo {
+    float: none;
+    text-align: center;
+    padding-top: 0;
+    margin-bottom: 10px;
+  }
+
+  .header-logo .logo {
+    display: inline-block;
+  }
+
+  .header-ctn {
+    float: none;
+    text-align: center;
+  }
+
+  .header-search form .input-select {
+    min-width: 140px;
+  }
+
+  .cart-dropdown {
+    right: 50%;
+    transform: translateX(50%);
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .section {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .shop .shop-img > img {
+    height: 220px;
+  }
+
+  .main-nav > li + li {
+    margin-left: 0;
+  }
+}
