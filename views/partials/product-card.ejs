@@ -1,32 +1,73 @@
-<div class="product">
+<div class="product product-card-clean">
   <div class="product-img">
-    <img src="<%= product.thumbnail %>" alt="<%= product.name %>">
-    <% if (product.status === 'sold_out') { %><div class="product-label"><span class="sale">Sold Out</span></div><% } %>
+    <a href="/product/<%= product.slug %>" class="product-image-link">
+      <img src="<%= product.thumbnail %>" alt="<%= product.name %>" loading="lazy">
+    </a>
+
+    <% 
+      const hasDiscount = product.compare_price_thb && product.price_thb && product.compare_price_thb > product.price_thb;
+      const discountPercent = hasDiscount
+        ? Math.round(((product.compare_price_thb - product.price_thb) / product.compare_price_thb) * 100)
+        : 0;
+    %>
+
+    <% if (product.is_new) { %>
+      <div class="product-label">
+        <span class="new">NEW</span>
+      </div>
+    <% } else if (hasDiscount) { %>
+      <div class="product-label">
+        <span class="sale">-<%= discountPercent %>%</span>
+      </div>
+    <% } %>
   </div>
+
   <div class="product-body">
-    <p class="product-category"><%= product.category %></p>
-    <h3 class="product-name"><a href="/product/<%= product.slug %>"><%= product.name %></a></h3>
+    <% if (product.category) { %>
+      <p class="product-category"><%= product.category %></p>
+    <% } %>
+
+    <h3 class="product-name">
+      <a href="/product/<%= product.slug %>"><%= product.name %></a>
+    </h3>
+
     <h4 class="product-price">
-      <%= product.price_thb ? 'THB ' + product.price_thb.toLocaleString('en-US') : '' %>
-      <% if (product.price_idr) { %><small>| IDR <%= product.price_idr.toLocaleString('en-US') %></small><% } %>
+      THB <%= product.price_thb ? product.price_thb.toLocaleString('en-US') : '0' %>
+      <% if (product.price_idr) { %>
+        <small>| IDR <%= product.price_idr.toLocaleString('en-US') %></small>
+      <% } %>
+
       <% if (product.compare_price_thb || product.compare_price_idr) { %>
         <del class="product-old-price">
-          <% if (product.compare_price_thb) { %>THB <%= product.compare_price_thb.toLocaleString('en-US') %><% } %>
-          <% if (product.compare_price_idr) { %> / IDR <%= product.compare_price_idr.toLocaleString('en-US') %><% } %>
+          <% if (product.compare_price_thb) { %>
+            THB <%= product.compare_price_thb.toLocaleString('en-US') %>
+          <% } %>
+          <% if (product.compare_price_idr) { %>
+            | IDR <%= product.compare_price_idr.toLocaleString('en-US') %>
+          <% } %>
         </del>
       <% } %>
     </h4>
-    <div class="product-rating"></div>
-    <div class="product-btns"><a href="/product/<%= product.slug %>" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">detail</span></a></div>
-  </div>
-  <div class="add-to-cart">
-    <% if (product.status === 'sold_out') { %>
-      <button class="add-to-cart-btn" type="button" disabled><i class="fa fa-ban"></i> sold out</button>
-    <% } else { %>
-      <form method="post" action="/cart/add">
-        <input type="hidden" name="product_id" value="<%= product.id %>">
-        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-      </form>
-    <% } %>
+
+    <div class="product-actions">
+      <a href="/product/<%= product.slug %>" class="detail-btn" aria-label="Lihat detail <%= product.name %>">
+        <i class="fa fa-eye"></i>
+        <span>Detail</span>
+      </a>
+
+      <% if (product.status === 'sold_out') { %>
+        <button class="add-to-cart-btn" type="button" disabled>
+          Sold Out
+        </button>
+      <% } else { %>
+        <form method="post" action="/cart/add" class="product-card-cart-form">
+          <input type="hidden" name="product_id" value="<%= product.id %>">
+          <input type="hidden" name="qty" value="1">
+          <button class="add-to-cart-btn" type="submit">
+            Add to Cart
+          </button>
+        </form>
+      <% } %>
+    </div>
   </div>
 </div>
