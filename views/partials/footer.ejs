@@ -42,11 +42,15 @@
           <div class="footer">
             <h3 class="footer-title">Kategori</h3>
             <ul class="footer-links">
-              <% categories.forEach(function(cat){ %>
-                <li>
-                  <a href="/shop?category=<%= encodeURIComponent(cat.name) %>"><%= cat.name %></a>
-                </li>
-              <% }) %>
+              <% if (categories && categories.length) { %>
+                <% categories.forEach(function(cat){ %>
+                  <li>
+                    <a href="/shop?category=<%= encodeURIComponent(cat.name) %>"><%= cat.name %></a>
+                  </li>
+                <% }) %>
+              <% } else { %>
+                <li><span>Tidak ada kategori</span></li>
+              <% } %>
             </ul>
           </div>
         </div>
@@ -100,7 +104,8 @@
     var responsiveNav = document.getElementById('responsive-nav');
 
     if (menuToggle && responsiveNav) {
-      menuToggle.addEventListener('click', function () {
+      menuToggle.addEventListener('click', function (e) {
+        e.preventDefault();
         responsiveNav.classList.add('active');
         document.body.classList.add('mobile-nav-open');
       });
@@ -125,6 +130,18 @@
         document.body.classList.remove('mobile-nav-open');
       }
     });
+
+    var navLinks = document.querySelectorAll('#responsive-nav .main-nav a');
+    if (navLinks.length) {
+      navLinks.forEach(function (link) {
+        link.addEventListener('click', function () {
+          if (responsiveNav) {
+            responsiveNav.classList.remove('active');
+            document.body.classList.remove('mobile-nav-open');
+          }
+        });
+      });
+    }
   });
 </script>
 
