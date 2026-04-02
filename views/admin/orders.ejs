@@ -1,0 +1,52 @@
+<%- include('partials-top', { pageTitle: 'Orders', pageDescription: 'Pantau order masuk dan update status pesanan customer.' }) %>
+<div class="admin-card">
+  <% if (orders.length) { %>
+  <div class="table-responsive">
+    <table class="table admin-table">
+      <thead>
+        <tr><th>Order</th><th>Customer</th><th>Total</th><th>Items</th><th>Status</th><th>Action</th></tr>
+      </thead>
+      <tbody>
+        <% orders.forEach(function(order){ %>
+          <tr>
+            <td>
+              <strong><%= order.id %></strong><br>
+              <small class="text-muted-2"><%= new Date(order.created_at).toLocaleString('id-ID') %></small>
+            </td>
+            <td>
+              <strong><%= order.customer_name %></strong><br>
+              <small><%= order.whatsapp %></small><br>
+              <small class="text-muted-2"><%= order.address %></small>
+            </td>
+            <td>
+              THB <%= Number(order.total_thb || 0).toLocaleString('en-US') %><br>
+              IDR <%= Number(order.total_idr || 0).toLocaleString('id-ID') %>
+            </td>
+            <td>
+              <ul>
+                <% order.items.forEach(function(item){ %>
+                  <li><%= item.name %> x<%= item.qty %></li>
+                <% }) %>
+              </ul>
+            </td>
+            <td><span class="admin-badge <%= order.status %>"><%= order.status %></span></td>
+            <td>
+              <form method="post" action="/admin/orders/<%= order.id %>/status" class="admin-form">
+                <select class="input" name="status">
+                  <% statuses.forEach(function(status){ %>
+                    <option value="<%= status %>" <%= order.status === status ? 'selected' : '' %>><%= status %></option>
+                  <% }) %>
+                </select>
+                <button class="btn btn-primary btn-sm mt-15" type="submit">Update</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <% } else { %>
+    <div class="admin-empty">Belum ada order.</div>
+  <% } %>
+</div>
+<%- include('partials-bottom') %>

@@ -1,0 +1,51 @@
+<%- include('partials-top', { pageTitle: 'Products', pageDescription: 'Kelola semua produk toko dari satu tempat.', topAction: '<a href="/admin/products/create" class="primary-btn"><i class="fa fa-plus"></i> Add Product</a>' }) %>
+<div class="admin-card">
+  <% if (products.length) { %>
+  <div class="table-responsive">
+    <table class="table admin-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Status</th>
+          <th>Category</th>
+          <th>THB</th>
+          <th>IDR</th>
+          <th>Visible</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% products.forEach(function(item){ %>
+          <tr>
+            <td>
+              <div class="admin-product-cell">
+                <img src="<%= item.thumbnail || 'https://dummyimage.com/120x120/f1f5f9/64748b&text=No+Image' %>" alt="<%= item.name %>">
+                <div>
+                  <strong><%= item.name %></strong><br>
+                  <small class="text-muted-2"><%= item.slug %></small>
+                </div>
+              </div>
+            </td>
+            <td><span class="admin-badge <%= item.status %>"><%= item.status %></span></td>
+            <td><%= item.category || '-' %></td>
+            <td><%= Number(item.price_thb || 0).toLocaleString('en-US') %></td>
+            <td><%= Number(item.price_idr || 0).toLocaleString('id-ID') %></td>
+            <td><%= item.visible ? 'Yes' : 'No' %></td>
+            <td>
+              <div class="admin-actions">
+                <a class="btn btn-default btn-sm" href="/admin/products/<%= item.id %>/edit">Edit</a>
+                <form method="post" action="/admin/products/<%= item.id %>/delete" onsubmit="return confirm('Hapus produk ini?')">
+                  <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <% } else { %>
+    <div class="admin-empty">Belum ada produk. Klik <strong>Add Product</strong> untuk menambah produk baru.</div>
+  <% } %>
+</div>
+<%- include('partials-bottom') %>
