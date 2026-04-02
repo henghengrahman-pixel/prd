@@ -4,63 +4,30 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title><%= meta && meta.title ? meta.title : (settings.storeName || 'Online Store') %></title>
-  <meta name="description" content="<%= meta && meta.description ? meta.description : '' %>">
-  <meta name="keywords" content="<%= meta && meta.keywords ? meta.keywords : '' %>">
-  <link rel="canonical" href="<%= meta && meta.url ? meta.url : (baseUrl + currentPath) %>">
-
-  <meta property="og:title" content="<%= meta && meta.title ? meta.title : (settings.storeName || 'Online Store') %>">
-  <meta property="og:description" content="<%= meta && meta.description ? meta.description : '' %>">
+  <title><%= meta.title %></title>
+  <meta name="description" content="<%= meta.description %>">
+  <meta name="keywords" content="<%= meta.keywords %>">
+  <link rel="canonical" href="<%= meta.url || (baseUrl + currentPath) %>">
+  <meta property="og:title" content="<%= meta.title %>">
+  <meta property="og:description" content="<%= meta.description %>">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="<%= meta && meta.url ? meta.url : (baseUrl + currentPath) %>">
-  <meta property="og:image" content="<%= meta && meta.image ? meta.image : (settings.logo || '') %>">
-
+  <meta property="og:url" content="<%= meta.url || (baseUrl + currentPath) %>">
+  <meta property="og:image" content="<%= meta.image %>">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="<%= meta && meta.title ? meta.title : (settings.storeName || 'Online Store') %>">
-  <meta name="twitter:description" content="<%= meta && meta.description ? meta.description : '' %>">
-  <meta name="twitter:image" content="<%= meta && meta.image ? meta.image : (settings.logo || '') %>">
-
-  <script type="application/ld+json"><%- JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "Store",
-    "name": settings.storeName || "Online Store",
-    "url": baseUrl,
-    "image": settings.logo || "",
-    "telephone": settings.phone || "",
-    "address": settings.address || ""
-  }) %></script>
-
+  <meta name="twitter:title" content="<%= meta.title %>">
+  <meta name="twitter:description" content="<%= meta.description %>">
+  <meta name="twitter:image" content="<%= meta.image %>">
+  <script type="application/ld+json"><%- JSON.stringify({"@context":"https://schema.org","@type":"Store","name":settings.storeName,"url":baseUrl,"image":settings.logo,"telephone":settings.phone,"address":settings.address}) %></script>
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
-
-  <!-- pakai path lama dulu, jangan ubah ke /css dulu -->
   <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="/assets/css/slick.css">
   <link rel="stylesheet" href="/assets/css/slick-theme.css">
   <link rel="stylesheet" href="/assets/css/nouislider.min.css">
   <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
   <link rel="stylesheet" href="/assets/css/style.css">
-
-  <% if (currentPath && currentPath.startsWith('/admin')) { %>
-    <link rel="stylesheet" href="/assets/css/admin.css">
-  <% } %>
-
+  <link rel="stylesheet" href="/assets/css/admin.css">
   <style>
-    .product-old-price { text-decoration: line-through; opacity: .7; }
-    .sold-out-badge { display:inline-block; padding:4px 10px; background:#15161D; color:#fff; border-radius:20px; font-size:12px; }
-    .flash-alert { margin:20px 0; }
-    .empty-box { padding:30px; border:1px dashed #ccc; text-align:center; }
-    .logo img { max-height:50px; width:auto; }
-    .article-card img { width:100%; height:220px; object-fit:cover; }
-    .product-img img, .shop-img img { width:100%; height:250px; object-fit:cover; }
-    .product-widget .product-img img { height:60px; object-fit:cover; }
-    .product-details img { width:100%; }
-    .thumb-list img { width:100%; height:110px; object-fit:cover; }
-    .text-muted-2 { color:#8d99ae; }
-    .article-content img { max-width:100%; height:auto; }
-    .mb-15 { margin-bottom:15px; }
-    .mt-15 { margin-top:15px; }
-    .table-responsive { overflow:auto; }
+    .admin-bar a{margin-right:10px}.product-old-price{text-decoration:line-through;opacity:.7}.sold-out-badge{display:inline-block;padding:4px 10px;background:#15161D;color:#fff;border-radius:20px;font-size:12px}.flash-alert{margin:20px 0}.empty-box{padding:30px;border:1px dashed #ccc;text-align:center}.admin-layout{padding:30px 0}.table-actions form{display:inline-block}.logo img{max-height:50px}.store-filter .input{display:inline-block;width:auto}.article-card img{width:100%;height:220px;object-fit:cover}.product-img img,.shop-img img{width:100%;height:250px;object-fit:cover}.product-widget .product-img img{height:60px;object-fit:cover}.product-details img{width:100%}.thumb-list img{width:100%;height:110px;object-fit:cover}.text-muted-2{color:#8d99ae}.admin-card{background:#fff;border:1px solid #e4e7ed;padding:20px;margin-bottom:20px}.admin-card h3{margin-bottom:15px}.textarea-lg{min-height:140px}.header-search form{display:flex;gap:8px}.header-search .input-select{width:180px}.header-search .input{flex:1}.header-search .search-btn{border:none;background:#D10024;color:#fff;padding:0 20px;border-radius:0 40px 40px 0}.header-search .input,.header-search .input-select{border-radius:40px}.header-search .input{border-top-right-radius:0;border-bottom-right-radius:0}.table-responsive{overflow:auto}.btn-link-red{color:#D10024;border:none;background:none;padding:0}.admin-top{margin-bottom:20px}.nav-admin a{margin-right:15px}.article-content img{max-width:100%}.mb-15{margin-bottom:15px}.mt-15{margin-top:15px}
   </style>
 </head>
-<body class="<%= currentPath && currentPath.startsWith('/admin') ? 'admin-page' : '' %>">
+<body class="<%= currentPath.startsWith('/admin') ? 'admin-page' : '' %>">
