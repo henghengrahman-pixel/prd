@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= metaTitle || title || appName %></title>
+  <meta name="description" content="<%= metaDescription || settings.siteTagline || appName %>">
+  <link rel="icon" href="<%= settings.favicon || '/images/default-logo.svg' %>">
+  <link rel="canonical" href="<%= canonical || '' %>">
+  <meta property="og:title" content="<%= metaTitle || title || appName %>">
+  <meta property="og:description" content="<%= metaDescription || settings.siteTagline || appName %>">
+  <meta property="og:image" content="<%= ogImage || settings.headerBannerImage || '/images/default-banner.svg' %>">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body style="<%= settings.backgroundType === 'image' ? `background-image:url('${settings.backgroundImage}');` : `background:${settings.backgroundColor};` %>">

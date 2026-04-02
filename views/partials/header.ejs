@@ -1,0 +1,7 @@
+<header class="top-banner wrap">
+  <% if (settings.headerBannerType === 'gif' && settings.headerBannerGif) { %>
+    <img src="<%= settings.headerBannerGif %>" alt="Banner" class="banner-media">
+  <% } else { %>
+    <img src="<%= settings.headerBannerImage || '/images/default-banner.svg' %>" alt="Banner" class="banner-media">
+  <% } %>
+</header>

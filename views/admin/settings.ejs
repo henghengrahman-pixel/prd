@@ -1,0 +1,48 @@
+<%- include('../partials/head') %>
+<main class="admin-shell">
+  <%- include('partials/nav') %>
+  <section class="admin-content">
+    <h1>Settings</h1>
+    <% if (flashSuccess && flashSuccess.length) { %><div class="flash success"><%= flashSuccess[0] %></div><% } %>
+    <div class="admin-grid-two">
+      <form method="post" action="<%= baseUrl %>/<%= adminPath %>/settings" enctype="multipart/form-data" class="panel-card">
+        <h2>Branding</h2>
+        <label>Site Name</label><input name="siteName" value="<%= settings.siteName %>">
+        <label>Tagline</label><input name="siteTagline" value="<%= settings.siteTagline %>">
+        <label>Logo</label><input type="file" name="logoFile"><input name="logo" value="<%= settings.logo %>">
+        <label>Favicon</label><input type="file" name="faviconFile"><input name="favicon" value="<%= settings.favicon %>">
+        <label>Banner Type</label>
+        <select name="headerBannerType"><option value="image" <%= settings.headerBannerType==='image'?'selected':'' %>>Image</option><option value="gif" <%= settings.headerBannerType==='gif'?'selected':'' %>>GIF</option></select>
+        <label>Banner Image</label><input type="file" name="headerBannerImageFile"><input name="headerBannerImage" value="<%= settings.headerBannerImage %>">
+        <label>Banner GIF</label><input type="file" name="headerBannerGifFile"><input name="headerBannerGif" value="<%= settings.headerBannerGif %>">
+        <label>Background Type</label>
+        <select name="backgroundType"><option value="image" <%= settings.backgroundType==='image'?'selected':'' %>>Image</option><option value="color" <%= settings.backgroundType==='color'?'selected':'' %>>Color</option></select>
+        <label>Background Image</label><input type="file" name="backgroundImageFile"><input name="backgroundImage" value="<%= settings.backgroundImage %>">
+        <label>Background Color</label><input name="backgroundColor" value="<%= settings.backgroundColor %>">
+        <label>Primary Color</label><input name="primaryColor" value="<%= settings.primaryColor %>">
+        <label>Secondary Color</label><input name="secondaryColor" value="<%= settings.secondaryColor %>">
+        <label>Footer Text</label><input name="footerText" value="<%= settings.footerText %>">
+        <label>SEO Default Title</label><input name="defaultTitle" value="<%= settings.seo?.defaultTitle %>">
+        <label>SEO Default Description</label><textarea name="defaultDescription"><%= settings.seo?.defaultDescription %></textarea>
+        <label>SEO Default OG Image</label><input name="defaultOgImage" value="<%= settings.seo?.defaultOgImage %>">
+        <button class="cta-button" type="submit">Simpan Pengaturan</button>
+      </form>
+      <form method="post" action="<%= baseUrl %>/<%= adminPath %>/homepage" class="panel-card">
+        <h2>Homepage Sidebar</h2>
+        <label>Judul Sidebar</label><input name="sidebarTitle" value="<%= homepage.sidebarTitle %>">
+        <% const items = homepage.sidebarItems || []; const list = items.length ? items : [{time:'',name:'',note:'',lastResult:''},{time:'',name:'',note:'',lastResult:''},{time:'',name:'',note:'',lastResult:''},{time:'',name:'',note:'',lastResult:''}]; %>
+        <% list.forEach((item, index) => { %>
+          <div class="sub-block">
+            <h3>Item <%= index + 1 %></h3>
+            <input name="itemTime" value="<%= item.time %>" placeholder="Waktu">
+            <input name="itemName" value="<%= item.name %>" placeholder="Nama item">
+            <input name="itemNote" value="<%= item.note %>" placeholder="Catatan">
+            <input name="itemLastResult" value="<%= item.lastResult %>" placeholder="Nilai akhir">
+          </div>
+        <% }) %>
+        <button class="cta-button" type="submit">Simpan Homepage</button>
+      </form>
+    </div>
+  </section>
+</main>
+<%- include('../partials/footer') %>

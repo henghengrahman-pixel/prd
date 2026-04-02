@@ -1,0 +1,19 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<main class="wrap detail-shell">
+  <article class="detail-card">
+    <div class="detail-topbar">
+      <% postCategories.forEach((category) => { %>
+        <a class="badge-link" href="/kategori/<%= category.slug %>"><%= category.name %></a>
+      <% }) %>
+      <span class="badge-link"><%= formatDateTime(post.publishedAt) %></span>
+    </div>
+    <h1 class="detail-title"><%= post.title %></h1>
+    <img src="<%= post.thumbnail %>" alt="<%= post.title %>" class="detail-image">
+    <div class="detail-content"><%- post.content %></div>
+  </article>
+</main>
+
+<%- include('partials/footer') %>

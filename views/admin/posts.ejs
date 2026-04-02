@@ -1,0 +1,42 @@
+<%- include('../partials/head') %>
+<main class="admin-shell">
+  <%- include('partials/nav') %>
+  <section class="admin-content">
+    <h1>Posts</h1>
+    <% if (flashSuccess && flashSuccess.length) { %><div class="flash success"><%= flashSuccess[0] %></div><% } %>
+    <div class="admin-grid-two">
+      <form method="post" action="<%= baseUrl %>/<%= adminPath %>/posts" enctype="multipart/form-data" class="panel-card">
+        <h2>Tambah Post</h2>
+        <label>Judul</label><input name="title" required>
+        <label>Slug</label><input name="slug">
+        <label>Excerpt</label><textarea name="excerpt"></textarea>
+        <label>Content (HTML sederhana)</label><textarea name="content" rows="8"></textarea>
+        <label>Thumbnail File</label><input type="file" name="thumbnailFile">
+        <label>Thumbnail URL</label><input name="thumbnail">
+        <label>Category IDs (pisahkan koma)</label><input name="categoryIds" placeholder="cat_artikel,cat_panduan">
+        <label>Status</label><select name="status"><option value="published">Published</option><option value="draft">Draft</option></select>
+        <label>SEO Title</label><input name="seoTitle">
+        <label>SEO Description</label><textarea name="seoDescription"></textarea>
+        <label>OG Image</label><input name="ogImage">
+        <button class="cta-button" type="submit">Tambah Post</button>
+      </form>
+      <div class="panel-card">
+        <h2>Daftar Post</h2>
+        <div class="table-like">
+          <% posts.forEach((post) => { %>
+            <div class="row-like">
+              <div>
+                <strong><%= post.title %></strong>
+                <small><%= post.slug %></small>
+              </div>
+              <form method="post" action="<%= baseUrl %>/<%= adminPath %>/posts/<%= post.id %>/delete" onsubmit="return confirm('Hapus post ini?')">
+                <button class="danger-btn" type="submit">Hapus</button>
+              </form>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<%- include('../partials/footer') %>

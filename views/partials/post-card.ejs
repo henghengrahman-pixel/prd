@@ -1,0 +1,15 @@
+<article class="post-card">
+  <div class="post-thumb-wrap">
+    <img class="post-thumb" src="<%= post.thumbnail %>" alt="<%= post.title %>">
+  </div>
+  <div class="post-content-card">
+    <div class="post-title-bar"><%= post.title %></div>
+    <div class="post-body-copy">
+      <p><%= post.excerpt %></p>
+    </div>
+    <div class="post-footer-bar">
+      <small><%= formatDateTime(post.publishedAt) %></small>
+      <a href="/artikel/<%= post.slug %>" class="mini-button">Baca Selengkapnya</a>
+    </div>
+  </div>
+</article>
