@@ -20,21 +20,12 @@
               </a>
             </li>
           <% } %>
-
-          <% if (settings.address) { %>
-            <li class="hide-mobile">
-              <a href="/contact">
-                <i class="fa fa-map-marker"></i>
-                <span><%= settings.address %></span>
-              </a>
-            </li>
-          <% } %>
         </ul>
 
         <ul class="header-links header-links-right">
           <% if (settings.whatsapp) { %>
             <li>
-              <a href="https://wa.me/<%= String(settings.whatsapp).replace(/\D/g, '') %>" target="_blank" rel="noopener noreferrer">
+              <a href="https://wa.me/<%= String(settings.whatsapp).replace(/\D/g, '') %>" target="_blank">
                 <i class="fa fa-whatsapp"></i>
                 <span>WhatsApp</span>
               </a>
@@ -48,89 +39,46 @@
   <div id="header">
     <div class="container">
       <div class="header-wrap">
+
+        <!-- LOGO -->
         <div class="header-logo">
-          <a href="/" class="logo" aria-label="<%= settings.storeName %>">
+          <a href="/" class="logo">
             <img src="<%= settings.logo %>" alt="<%= settings.storeName %>">
           </a>
         </div>
 
+        <!-- SEARCH -->
         <div class="header-search">
           <form method="get" action="/shop" class="search-form">
-            <label class="sr-only" for="category-select">Kategori</label>
-            <select class="input-select" id="category-select" name="category">
-              <option value="">All Categories</option>
-              <% categories.forEach(function(cat){ %>
-                <option value="<%= cat.name %>" <%= (typeof category !== 'undefined' && category === cat.name) ? 'selected' : '' %>>
-                  <%= cat.name %>
-                </option>
-              <% }) %>
-            </select>
-
-            <label class="sr-only" for="search-input">Cari produk</label>
             <input
-              id="search-input"
               class="input"
               type="text"
               name="q"
               value="<%= typeof query !== 'undefined' ? query : '' %>"
               placeholder="Cari produk..."
             >
-
             <button class="search-btn" type="submit">Cari</button>
           </form>
         </div>
 
+        <!-- CART + MENU -->
         <div class="header-ctn">
-          <div class="cart-area dropdown">
-            <a href="/cart" class="cart-toggle" aria-label="Lihat keranjang">
+          <div class="cart-area">
+            <a href="/cart" class="cart-toggle">
               <i class="fa fa-shopping-cart"></i>
               <span>Keranjang</span>
               <div class="qty"><%= cartCount %></div>
             </a>
-
-            <div class="cart-dropdown">
-              <div class="cart-list">
-                <% if (cart.length) { %>
-                  <% cart.slice(0, 3).forEach(function(item){ %>
-                    <div class="product-widget">
-                      <div class="product-img">
-                        <img src="<%= item.thumbnail %>" alt="<%= item.name %>">
-                      </div>
-                      <div class="product-body">
-                        <h3 class="product-name">
-                          <a href="/product/<%= item.slug %>"><%= item.name %></a>
-                        </h3>
-                        <h4 class="product-price">
-                          <span class="qty"><%= item.qty %>x</span>
-                          THB <%= item.price_thb.toLocaleString('en-US') %>
-                        </h4>
-                      </div>
-                    </div>
-                  <% }) %>
-                <% } else { %>
-                  <p class="empty-cart-text">Keranjang masih kosong.</p>
-                <% } %>
-              </div>
-
-              <div class="cart-summary">
-                <small><%= cartCount %> item dipilih</small>
-                <h5>SUBTOTAL: THB <%= cartTotals.total_thb.toLocaleString('en-US') %></h5>
-              </div>
-
-              <div class="cart-btns">
-                <a href="/cart">Lihat Cart</a>
-                <a href="/checkout">Checkout <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
           </div>
 
           <div class="menu-toggle">
-            <a href="#responsive-nav" aria-label="Buka menu navigasi">
+            <a href="#responsive-nav">
               <i class="fa fa-bars"></i>
               <span>Menu</span>
             </a>
           </div>
         </div>
+
       </div>
     </div>
   </div>
