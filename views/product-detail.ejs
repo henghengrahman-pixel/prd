@@ -24,6 +24,8 @@
             >
           </div>
 
+          <div class="mobile-swipe-hint">Geser kiri / kanan untuk melihat foto lain</div>
+
           <div class="thumb-list" id="product-thumb-list">
             <button
               type="button"
@@ -175,38 +177,62 @@
   document.addEventListener('DOMContentLoaded', function () {
     var mainImage = document.getElementById('main-product-image');
     var popupImage = document.getElementById('popup-product-image');
-    var thumbs = document.querySelectorAll('.product-thumb-item');
+    var thumbs = Array.prototype.slice.call(document.querySelectorAll('.product-thumb-item'));
     var modal = document.getElementById('product-image-modal');
     var openPopupBtn = document.getElementById('open-image-popup');
     var closePopupBtn = document.getElementById('close-image-popup');
     var modalBackdrop = document.getElementById('product-image-modal-backdrop');
+    var mainPreview = document.getElementById('product-main-preview');
 
-    function setActiveImage(newImage, clickedThumb) {
-      if (!newImage || !mainImage) return;
+    if (!mainImage || !thumbs.length) return;
+
+    var currentIndex = 0;
+    var touchStartX = 0;
+    var touchEndX = 0;
+
+    function updateActiveThumb(index) {
+      currentIndex = index;
+
+      thumbs.forEach(function (item, i) {
+        item.classList.toggle('active', i === index);
+      });
+
+      var newImage = thumbs[index].getAttribute('data-image');
       mainImage.setAttribute('src', newImage);
       if (popupImage) popupImage.setAttribute('src', newImage);
 
-      thumbs.forEach(function (item) {
-        item.classList.remove('active');
-      });
-
-      if (clickedThumb) {
-        clickedThumb.classList.add('active');
+      if (window.innerWidth <= 767) {
+        thumbs[index].scrollIntoView({
+          behavior: 'smooth',
+          inline: 'center',
+          block: 'nearest'
+        });
       }
     }
 
-    thumbs.forEach(function (thumb) {
+    thumbs.forEach(function (thumb, index) {
       thumb.addEventListener('click', function () {
-        var newImage = this.getAttribute('data-image');
-        setActiveImage(newImage, this);
+        updateActiveThumb(index);
       });
     });
 
+    function showNextImage() {
+      var nextIndex = currentIndex + 1;
+      if (nextIndex >= thumbs.length) nextIndex = 0;
+      updateActiveThumb(nextIndex);
+    }
+
+    function showPrevImage() {
+      var prevIndex = currentIndex - 1;
+      if (prevIndex < 0) prevIndex = thumbs.length - 1;
+      updateActiveThumb(prevIndex);
+    }
+
     function openModal() {
-      if (!modal || !popupImage || !mainImage) return;
-      popupImage.setAttribute('src', mainImage.getAttribute('src'));
+      if (!modal) return;
       modal.classList.add('is-open');
       document.body.classList.add('modal-open');
+      if (popupImage) popupImage.setAttribute('src', mainImage.getAttribute('src'));
     }
 
     function closeModal() {
@@ -215,28 +241,35 @@
       document.body.classList.remove('modal-open');
     }
 
-    if (openPopupBtn) {
-      openPopupBtn.addEventListener('click', openModal);
-    }
-
-    if (mainImage) {
-      mainImage.addEventListener('click', openModal);
-      mainImage.style.cursor = 'zoom-in';
-    }
-
-    if (closePopupBtn) {
-      closePopupBtn.addEventListener('click', closeModal);
-    }
-
-    if (modalBackdrop) {
-      modalBackdrop.addEventListener('click', closeModal);
-    }
+    if (openPopupBtn) openPopupBtn.addEventListener('click', openModal);
+    mainImage.addEventListener('click', openModal);
+    if (closePopupBtn) closePopupBtn.addEventListener('click', closeModal);
+    if (modalBackdrop) modalBackdrop.addEventListener('click', closeModal);
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') {
-        closeModal();
-      }
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowRight') showNextImage();
+      if (e.key === 'ArrowLeft') showPrevImage();
     });
+
+    mainPreview.addEventListener('touchstart', function (e) {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    mainPreview.addEventListener('touchend', function (e) {
+      touchEndX = e.changedTouches[0].screenX;
+      var diff = touchEndX - touchStartX;
+
+      if (Math.abs(diff) < 40) return;
+
+      if (diff < 0) {
+        showNextImage();
+      } else {
+        showPrevImage();
+      }
+    }, { passive: true });
+
+    updateActiveThumb(0);
   });
 </script>
 
