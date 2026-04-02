@@ -1,41 +1,45 @@
 <%- include('partials/head') %>
 <%- include('partials/header') %>
 
-<section class="section home-products-section">
+<!-- PRODUK UNGGULAN SLIDER -->
+<section class="section home-featured-slider-section">
   <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="section-title">
-          <h1 class="title">Produk Unggulan</h1>
+    <div class="section-title">
+      <h1 class="title">Produk Unggulan</h1>
+    </div>
+
+    <% if (featured && featured.length) { %>
+      <div class="featured-slider-wrap">
+        <div class="featured-slider-track">
+          <% featured.forEach(function(product){ %>
+            <div class="featured-slide-item">
+              <%- include('partials/product-card', { product: product }) %>
+            </div>
+          <% }) %>
+
+          <% featured.forEach(function(product){ %>
+            <div class="featured-slide-item">
+              <%- include('partials/product-card', { product: product }) %>
+            </div>
+          <% }) %>
         </div>
       </div>
-
-      <% if (featured && featured.length) { %>
-        <% featured.forEach(function(product){ %>
-          <div class="col-md-3 col-sm-6 col-xs-6">
-            <%- include('partials/product-card', { product: product }) %>
-          </div>
-        <% }) %>
-      <% } else { %>
-        <div class="col-md-12">
-          <div class="empty-state-box text-center">
-            <p>Belum ada produk unggulan saat ini.</p>
-          </div>
-        </div>
-      <% } %>
-    </div>
+    <% } else { %>
+      <div class="empty-state-box text-center">
+        <p>Belum ada produk unggulan saat ini.</p>
+      </div>
+    <% } %>
   </div>
 </section>
 
+<!-- SHOP / SEMUA PRODUK -->
 <section class="section home-products-section">
   <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="section-title">
-          <h2 class="title">Produk Rekomendasi</h2>
-        </div>
-      </div>
+    <div class="section-title">
+      <h2 class="title">Shop</h2>
+    </div>
 
+    <div class="row">
       <% if (recommended && recommended.length) { %>
         <% recommended.forEach(function(product){ %>
           <div class="col-md-3 col-sm-6 col-xs-6">
@@ -45,52 +49,47 @@
       <% } else { %>
         <div class="col-md-12">
           <div class="empty-state-box text-center">
-            <p>Belum ada produk rekomendasi saat ini.</p>
+            <p>Belum ada produk.</p>
           </div>
         </div>
       <% } %>
     </div>
+
+    <div class="text-center" style="margin-top:20px;">
+      <a href="/shop" class="primary-btn">Lihat Semua Produk</a>
+    </div>
   </div>
 </section>
 
+<!-- ARTIKEL -->
 <section class="section home-articles-section">
   <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="section-title">
-          <h2 class="title">Artikel Terbaru</h2>
-        </div>
-      </div>
+    <div class="section-title">
+      <h2 class="title">Artikel</h2>
+    </div>
 
+    <div class="row">
       <% if (articles && articles.length) { %>
         <% articles.forEach(function(article){ %>
           <div class="col-md-4 col-sm-6 col-xs-12">
             <article class="admin-card article-card home-article-card">
-              <a href="/article/<%= article.slug %>" class="article-thumb-link">
-                <img
-                  src="<%= article.thumbnail %>"
-                  alt="<%= article.title %>"
-                  loading="lazy"
-                >
+              <a href="/article/<%= article.slug %>">
+                <img src="<%= article.thumbnail %>" alt="<%= article.title %>">
               </a>
 
               <div class="article-card-content">
-                <h3 class="article-card-title">
+                <h3>
                   <a href="/article/<%= article.slug %>"><%= article.title %></a>
                 </h3>
-                <p class="article-card-excerpt"><%= article.excerpt %></p>
-                <a href="/article/<%= article.slug %>" class="article-read-more">
-                  Baca Selengkapnya <i class="fa fa-arrow-circle-right"></i>
-                </a>
+                <p><%= article.excerpt %></p>
+                <a href="/article/<%= article.slug %>">Baca Selengkapnya</a>
               </div>
             </article>
           </div>
         <% }) %>
       <% } else { %>
-        <div class="col-md-12">
-          <div class="empty-state-box text-center">
-            <p>Belum ada artikel terbaru.</p>
-          </div>
+        <div class="col-md-12 text-center">
+          <p>Belum ada artikel.</p>
         </div>
       <% } %>
     </div>
