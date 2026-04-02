@@ -5,26 +5,26 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title><%= meta && meta.title ? meta.title : (settings.storeName || settings.store_name || 'Online Store') %></title>
+  <title><%= meta && meta.title ? meta.title : (settings.storeName || 'Online Store') %></title>
   <meta name="description" content="<%= meta && meta.description ? meta.description : '' %>">
   <meta name="keywords" content="<%= meta && meta.keywords ? meta.keywords : '' %>">
-  <link rel="canonical" href="<%= (meta && meta.url) ? meta.url : (baseUrl + currentPath) %>">
+  <link rel="canonical" href="<%= meta && meta.url ? meta.url : (baseUrl + currentPath) %>">
 
-  <meta property="og:title" content="<%= meta && meta.title ? meta.title : (settings.storeName || settings.store_name || 'Online Store') %>">
+  <meta property="og:title" content="<%= meta && meta.title ? meta.title : (settings.storeName || 'Online Store') %>">
   <meta property="og:description" content="<%= meta && meta.description ? meta.description : '' %>">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="<%= (meta && meta.url) ? meta.url : (baseUrl + currentPath) %>">
+  <meta property="og:url" content="<%= meta && meta.url ? meta.url : (baseUrl + currentPath) %>">
   <meta property="og:image" content="<%= meta && meta.image ? meta.image : (settings.logo || '') %>">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="<%= meta && meta.title ? meta.title : (settings.storeName || settings.store_name || 'Online Store') %>">
+  <meta name="twitter:title" content="<%= meta && meta.title ? meta.title : (settings.storeName || 'Online Store') %>">
   <meta name="twitter:description" content="<%= meta && meta.description ? meta.description : '' %>">
   <meta name="twitter:image" content="<%= meta && meta.image ? meta.image : (settings.logo || '') %>">
 
   <script type="application/ld+json"><%- JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Store",
-    "name": settings.storeName || settings.store_name || "Online Store",
+    "name": settings.storeName || "Online Store",
     "url": baseUrl,
     "image": settings.logo || "",
     "telephone": settings.phone || "",
@@ -33,7 +33,6 @@
 
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
-  <!-- Frontend template CSS -->
   <link rel="stylesheet" href="/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/slick.css">
   <link rel="stylesheet" href="/css/slick-theme.css">
@@ -41,89 +40,26 @@
   <link rel="stylesheet" href="/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/style.css">
 
-  <!-- Admin CSS hanya untuk halaman admin -->
   <% if (currentPath && currentPath.startsWith('/admin')) { %>
     <link rel="stylesheet" href="/css/admin.css">
   <% } %>
 
   <style>
-    .product-old-price {
-      text-decoration: line-through;
-      opacity: .7;
-    }
-
-    .sold-out-badge {
-      display: inline-block;
-      padding: 4px 10px;
-      background: #15161D;
-      color: #fff;
-      border-radius: 20px;
-      font-size: 12px;
-    }
-
-    .flash-alert {
-      margin: 20px 0;
-    }
-
-    .empty-box {
-      padding: 30px;
-      border: 1px dashed #ccc;
-      text-align: center;
-    }
-
-    .logo img {
-      max-height: 50px;
-      width: auto;
-    }
-
-    .article-card img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-    }
-
-    .product-img img,
-    .shop-img img {
-      width: 100%;
-      height: 250px;
-      object-fit: cover;
-    }
-
-    .product-widget .product-img img {
-      height: 60px;
-      object-fit: cover;
-    }
-
-    .product-details img {
-      width: 100%;
-    }
-
-    .thumb-list img {
-      width: 100%;
-      height: 110px;
-      object-fit: cover;
-    }
-
-    .text-muted-2 {
-      color: #8d99ae;
-    }
-
-    .article-content img {
-      max-width: 100%;
-      height: auto;
-    }
-
-    .mb-15 {
-      margin-bottom: 15px;
-    }
-
-    .mt-15 {
-      margin-top: 15px;
-    }
-
-    .table-responsive {
-      overflow: auto;
-    }
+    .product-old-price{ text-decoration: line-through; opacity: .7; }
+    .sold-out-badge{ display:inline-block; padding:4px 10px; background:#15161D; color:#fff; border-radius:20px; font-size:12px; }
+    .flash-alert{ margin:20px 0; }
+    .empty-box{ padding:30px; border:1px dashed #ccc; text-align:center; }
+    .logo img{ max-height:50px; width:auto; }
+    .article-card img{ width:100%; height:220px; object-fit:cover; }
+    .product-img img, .shop-img img{ width:100%; height:250px; object-fit:cover; }
+    .product-widget .product-img img{ height:60px; object-fit:cover; }
+    .product-details img{ width:100%; }
+    .thumb-list img{ width:100%; height:110px; object-fit:cover; }
+    .text-muted-2{ color:#8d99ae; }
+    .article-content img{ max-width:100%; height:auto; }
+    .mb-15{ margin-bottom:15px; }
+    .mt-15{ margin-top:15px; }
+    .table-responsive{ overflow:auto; }
   </style>
 </head>
 <body class="<%= currentPath && currentPath.startsWith('/admin') ? 'admin-page' : '' %>">
