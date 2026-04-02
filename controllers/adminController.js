@@ -2,7 +2,7 @@ const { ORDER_STATUSES } = require('../helpers/constants');
 const { getProducts, createProduct, updateProduct, deleteProduct, getProductById, getOrders, updateOrderStatus, getArticles, createArticle, updateArticle, deleteArticle, getArticleById, getSettings, saveSettings } = require('../helpers/store');
 const { setFlash } = require('../middleware');
 
-function loginPage(req, res) { res.render('admin/login', { layout: false }); }
+function loginPage(req, res) { res.render('admin/login', { layout: false, flash: req.session.flash || null }); delete req.session.flash; }
 function login(req, res) {
   const { username, password } = req.body;
   if (username === process.env.ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD) {
@@ -25,9 +25,37 @@ function dashboard(req, res) {
 
 function productList(req, res) { res.render('admin/products', { products: getProducts() }); }
 function productCreatePage(req, res) { res.render('admin/product-form', { item: null }); }
-function productStore(req, res) { createProduct(req.body); setFlash(req, 'success', 'Produk berhasil dibuat.'); res.redirect('/admin/products'); }
+function productStore(req, res) {
+  try {
+    if (!String(req.body.name || '').trim()) {
+      setFlash(req, 'danger', 'Nama produk wajib diisi.');
+      return res.redirect('/admin/products/create');
+    }
+    createProduct(req.body);
+    setFlash(req, 'success', 'Produk berhasil dibuat.');
+    return res.redirect('/admin/products');
+  } catch (error) {
+    console.error(error);
+    setFlash(req, 'danger', 'Gagal menambah produk. Periksa field yang diisi.');
+    return res.redirect('/admin/products/create');
+  }
+}
 function productEditPage(req, res) { res.render('admin/product-form', { item: getProductById(req.params.id) || null }); }
-function productUpdate(req, res) { updateProduct(req.params.id, req.body); setFlash(req, 'success', 'Produk berhasil diupdate.'); res.redirect('/admin/products'); }
+function productUpdate(req, res) {
+  try {
+    if (!String(req.body.name || '').trim()) {
+      setFlash(req, 'danger', 'Nama produk wajib diisi.');
+      return res.redirect(`/admin/products/${req.params.id}/edit`);
+    }
+    updateProduct(req.params.id, req.body);
+    setFlash(req, 'success', 'Produk berhasil diupdate.');
+    return res.redirect('/admin/products');
+  } catch (error) {
+    console.error(error);
+    setFlash(req, 'danger', 'Gagal update produk.');
+    return res.redirect(`/admin/products/${req.params.id}/edit`);
+  }
+}
 function productDelete(req, res) { deleteProduct(req.params.id); setFlash(req, 'success', 'Produk berhasil dihapus.'); res.redirect('/admin/products'); }
 
 function orderList(req, res) { res.render('admin/orders', { orders: getOrders(), statuses: ORDER_STATUSES }); }
