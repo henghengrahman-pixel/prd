@@ -3,10 +3,37 @@
 
 <section class="section product-detail-section">
   <div class="container">
-    <div class="row">
-      <div class="col-md-5 col-md-push-2">
+    <div class="row product-detail-row">
+      <div class="col-md-2 col-sm-2 col-xs-12 product-thumb-column">
+        <div id="product-imgs" class="thumb-list">
+          <div class="product-preview product-thumb-item active" data-image="<%= product.thumbnail %>">
+            <img
+              src="<%= product.thumbnail %>"
+              alt="<%= product.name %>"
+              loading="lazy"
+            >
+          </div>
+
+          <% if (product.images && product.images.length) { %>
+            <% product.images.forEach(function(img){ %>
+              <% if (img && img !== product.thumbnail) { %>
+                <div class="product-preview product-thumb-item" data-image="<%= img %>">
+                  <img
+                    src="<%= img %>"
+                    alt="<%= product.name %>"
+                    loading="lazy"
+                  >
+                </div>
+              <% } %>
+            <% }) %>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="col-md-5 col-sm-5 col-xs-12 product-main-column">
         <div id="product-main-img" class="product-preview product-main-preview">
           <img
+            id="main-product-image"
             src="<%= product.thumbnail %>"
             alt="<%= product.name %>"
             loading="eager"
@@ -14,31 +41,7 @@
         </div>
       </div>
 
-      <div class="col-md-2 col-md-pull-5">
-        <div id="product-imgs" class="thumb-list">
-          <% if (product.images && product.images.length) { %>
-            <% product.images.forEach(function(img){ %>
-              <div class="product-preview mb-15 product-thumb-item">
-                <img
-                  src="<%= img %>"
-                  alt="<%= product.name %>"
-                  loading="lazy"
-                >
-              </div>
-            <% }) %>
-          <% } else { %>
-            <div class="product-preview mb-15 product-thumb-item">
-              <img
-                src="<%= product.thumbnail %>"
-                alt="<%= product.name %>"
-                loading="lazy"
-              >
-            </div>
-          <% } %>
-        </div>
-      </div>
-
-      <div class="col-md-5">
+      <div class="col-md-5 col-sm-5 col-xs-12">
         <div class="product-details">
           <h1 class="product-name"><%= product.name %></h1>
 
@@ -154,5 +157,28 @@
     </div>
   </div>
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var mainImage = document.getElementById('main-product-image');
+    var thumbs = document.querySelectorAll('.product-thumb-item');
+
+    thumbs.forEach(function (thumb) {
+      thumb.addEventListener('click', function () {
+        var newImage = this.getAttribute('data-image');
+        if (!newImage || !mainImage) return;
+
+        mainImage.setAttribute('src', newImage);
+        mainImage.setAttribute('alt', '<%= product.name.replace(/'/g, "\\'") %>');
+
+        thumbs.forEach(function (item) {
+          item.classList.remove('active');
+        });
+
+        this.classList.add('active');
+      });
+    });
+  });
+</script>
 
 <%- include('partials/footer') %>
