@@ -4,25 +4,17 @@
 <section class="section product-detail-section">
   <div class="container">
     <div class="row product-detail-row">
-      <div class="col-md-2 col-sm-2 col-xs-12 product-thumb-column">
+      <div class="col-md-2 col-sm-12 col-xs-12 product-thumb-column">
         <div id="product-imgs" class="thumb-list">
           <div class="product-preview product-thumb-item active" data-image="<%= product.thumbnail %>">
-            <img
-              src="<%= product.thumbnail %>"
-              alt="<%= product.name %>"
-              loading="lazy"
-            >
+            <img src="<%= product.thumbnail %>" alt="<%= product.name %>" loading="lazy">
           </div>
 
           <% if (product.images && product.images.length) { %>
             <% product.images.forEach(function(img){ %>
               <% if (img && img !== product.thumbnail) { %>
                 <div class="product-preview product-thumb-item" data-image="<%= img %>">
-                  <img
-                    src="<%= img %>"
-                    alt="<%= product.name %>"
-                    loading="lazy"
-                  >
+                  <img src="<%= img %>" alt="<%= product.name %>" loading="lazy">
                 </div>
               <% } %>
             <% }) %>
@@ -30,18 +22,13 @@
         </div>
       </div>
 
-      <div class="col-md-5 col-sm-5 col-xs-12 product-main-column">
+      <div class="col-md-5 col-sm-12 col-xs-12 product-main-column">
         <div id="product-main-img" class="product-preview product-main-preview">
-          <img
-            id="main-product-image"
-            src="<%= product.thumbnail %>"
-            alt="<%= product.name %>"
-            loading="eager"
-          >
+          <img id="main-product-image" src="<%= product.thumbnail %>" alt="<%= product.name %>" loading="eager">
         </div>
       </div>
 
-      <div class="col-md-5 col-sm-5 col-xs-12">
+      <div class="col-md-5 col-sm-12 col-xs-12 product-info-column">
         <div class="product-details">
           <h1 class="product-name"><%= product.name %></h1>
 
@@ -81,16 +68,8 @@
             <% } else { %>
               <form method="post" action="/cart/add" class="add-to-cart-form">
                 <input type="hidden" name="product_id" value="<%= product.id %>">
-
                 <label class="sr-only" for="qty-input">Jumlah</label>
-                <input
-                  id="qty-input"
-                  type="number"
-                  name="qty"
-                  value="1"
-                  min="1"
-                  class="input qty-input"
-                >
+                <input id="qty-input" type="number" name="qty" value="1" min="1" class="input qty-input">
 
                 <button class="add-to-cart-btn" type="submit">
                   <i class="fa fa-shopping-cart"></i> Add to Cart
@@ -169,7 +148,6 @@
         if (!newImage || !mainImage) return;
 
         mainImage.setAttribute('src', newImage);
-        mainImage.setAttribute('alt', '<%= product.name.replace(/'/g, "\\'") %>');
 
         thumbs.forEach(function (item) {
           item.classList.remove('active');
