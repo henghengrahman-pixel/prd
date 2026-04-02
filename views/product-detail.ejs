@@ -4,27 +4,51 @@
 <section class="section product-detail-section">
   <div class="container">
     <div class="row product-detail-row">
-      <div class="col-md-2 col-sm-12 col-xs-12 product-thumb-column">
-        <div id="product-imgs" class="thumb-list">
-          <div class="product-preview product-thumb-item active" data-image="<%= product.thumbnail %>">
-            <img src="<%= product.thumbnail %>" alt="<%= product.name %>" loading="lazy">
+      <div class="col-md-7 col-sm-12 col-xs-12 product-gallery-column">
+        <div class="product-gallery-wrap">
+          <div class="product-main-preview" id="product-main-preview">
+            <button
+              type="button"
+              class="product-zoom-btn"
+              id="open-image-popup"
+              aria-label="Lihat gambar lebih besar"
+            >
+              <i class="fa fa-search-plus"></i>
+            </button>
+
+            <img
+              id="main-product-image"
+              src="<%= product.thumbnail %>"
+              alt="<%= product.name %>"
+              loading="eager"
+            >
           </div>
 
-          <% if (product.images && product.images.length) { %>
-            <% product.images.forEach(function(img){ %>
-              <% if (img && img !== product.thumbnail) { %>
-                <div class="product-preview product-thumb-item" data-image="<%= img %>">
-                  <img src="<%= img %>" alt="<%= product.name %>" loading="lazy">
-                </div>
-              <% } %>
-            <% }) %>
-          <% } %>
-        </div>
-      </div>
+          <div class="thumb-list" id="product-thumb-list">
+            <button
+              type="button"
+              class="product-thumb-item active"
+              data-image="<%= product.thumbnail %>"
+              aria-label="Gambar utama <%= product.name %>"
+            >
+              <img src="<%= product.thumbnail %>" alt="<%= product.name %>" loading="lazy">
+            </button>
 
-      <div class="col-md-5 col-sm-12 col-xs-12 product-main-column">
-        <div id="product-main-img" class="product-preview product-main-preview">
-          <img id="main-product-image" src="<%= product.thumbnail %>" alt="<%= product.name %>" loading="eager">
+            <% if (product.images && product.images.length) { %>
+              <% product.images.forEach(function(img){ %>
+                <% if (img && img !== product.thumbnail) { %>
+                  <button
+                    type="button"
+                    class="product-thumb-item"
+                    data-image="<%= img %>"
+                    aria-label="Thumbnail <%= product.name %>"
+                  >
+                    <img src="<%= img %>" alt="<%= product.name %>" loading="lazy">
+                  </button>
+                <% } %>
+              <% }) %>
+            <% } %>
+          </div>
         </div>
       </div>
 
@@ -137,24 +161,81 @@
   </div>
 </section>
 
+<div class="product-image-modal" id="product-image-modal" aria-hidden="true">
+  <div class="product-image-modal-backdrop" id="product-image-modal-backdrop"></div>
+  <div class="product-image-modal-dialog" role="dialog" aria-modal="true" aria-label="Preview gambar produk">
+    <button type="button" class="product-image-modal-close" id="close-image-popup" aria-label="Tutup preview">
+      <i class="fa fa-times"></i>
+    </button>
+    <img id="popup-product-image" src="<%= product.thumbnail %>" alt="<%= product.name %>">
+  </div>
+</div>
+
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     var mainImage = document.getElementById('main-product-image');
+    var popupImage = document.getElementById('popup-product-image');
     var thumbs = document.querySelectorAll('.product-thumb-item');
+    var modal = document.getElementById('product-image-modal');
+    var openPopupBtn = document.getElementById('open-image-popup');
+    var closePopupBtn = document.getElementById('close-image-popup');
+    var modalBackdrop = document.getElementById('product-image-modal-backdrop');
+
+    function setActiveImage(newImage, clickedThumb) {
+      if (!newImage || !mainImage) return;
+      mainImage.setAttribute('src', newImage);
+      if (popupImage) popupImage.setAttribute('src', newImage);
+
+      thumbs.forEach(function (item) {
+        item.classList.remove('active');
+      });
+
+      if (clickedThumb) {
+        clickedThumb.classList.add('active');
+      }
+    }
 
     thumbs.forEach(function (thumb) {
       thumb.addEventListener('click', function () {
         var newImage = this.getAttribute('data-image');
-        if (!newImage || !mainImage) return;
-
-        mainImage.setAttribute('src', newImage);
-
-        thumbs.forEach(function (item) {
-          item.classList.remove('active');
-        });
-
-        this.classList.add('active');
+        setActiveImage(newImage, this);
       });
+    });
+
+    function openModal() {
+      if (!modal || !popupImage || !mainImage) return;
+      popupImage.setAttribute('src', mainImage.getAttribute('src'));
+      modal.classList.add('is-open');
+      document.body.classList.add('modal-open');
+    }
+
+    function closeModal() {
+      if (!modal) return;
+      modal.classList.remove('is-open');
+      document.body.classList.remove('modal-open');
+    }
+
+    if (openPopupBtn) {
+      openPopupBtn.addEventListener('click', openModal);
+    }
+
+    if (mainImage) {
+      mainImage.addEventListener('click', openModal);
+      mainImage.style.cursor = 'zoom-in';
+    }
+
+    if (closePopupBtn) {
+      closePopupBtn.addEventListener('click', closeModal);
+    }
+
+    if (modalBackdrop) {
+      modalBackdrop.addEventListener('click', closeModal);
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
     });
   });
 </script>
