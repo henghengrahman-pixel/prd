@@ -25,7 +25,7 @@
         <ul class="header-links header-links-right">
           <% if (settings.whatsapp) { %>
             <li>
-              <a href="https://wa.me/<%= String(settings.whatsapp).replace(/\D/g, '') %>" target="_blank">
+              <a href="https://wa.me/<%= String(settings.whatsapp).replace(/\D/g, '') %>" target="_blank" rel="noopener noreferrer">
                 <i class="fa fa-whatsapp"></i>
                 <span>WhatsApp</span>
               </a>
@@ -39,15 +39,12 @@
   <div id="header">
     <div class="container">
       <div class="header-wrap">
-
-        <!-- LOGO -->
         <div class="header-logo">
-          <a href="/" class="logo">
+          <a href="/" class="logo" aria-label="<%= settings.storeName %>">
             <img src="<%= settings.logo %>" alt="<%= settings.storeName %>">
           </a>
         </div>
 
-        <!-- SEARCH -->
         <div class="header-search">
           <form method="get" action="/shop" class="search-form">
             <input
@@ -61,23 +58,22 @@
           </form>
         </div>
 
-        <!-- CART + MENU -->
         <div class="header-ctn">
           <div class="cart-area">
-            <a href="/cart" class="cart-toggle">
+            <a href="/cart" class="cart-toggle" aria-label="Lihat keranjang">
               <i class="fa fa-shopping-cart"></i>
               <span>Keranjang</span>
               <div class="qty"><%= cartCount %></div>
             </a>
           </div>
 
-<div class="menu-toggle">
-  <a href="javascript:void(0)" id="mobile-menu-toggle" aria-label="Buka menu">
-    <i class="fa fa-bars"></i>
-    <span>Menu</span>
-  </a>
-</div>
-
+          <div class="menu-toggle">
+            <a href="javascript:void(0)" id="mobile-menu-toggle" aria-label="Buka menu">
+              <i class="fa fa-bars"></i>
+              <span>Menu</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -85,14 +81,15 @@
 
 <nav id="navigation">
   <div class="container">
-    <div id="responsive-nav"><div id="responsive-nav">
-  <div class="mobile-nav-header">
-    <span>Menu</span>
-    <button type="button" id="mobile-menu-close" class="mobile-menu-close" aria-label="Tutup menu">
-      <i class="fa fa-times"></i>
-    </button>
-  </div>
-  <ul class="main-nav nav navbar-nav">
+    <div id="responsive-nav">
+      <div class="mobile-nav-header">
+        <span>Menu</span>
+        <button type="button" id="mobile-menu-close" class="mobile-menu-close" aria-label="Tutup menu">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+
+      <ul class="main-nav nav navbar-nav">
         <li class="<%= currentPath === '/' ? 'active' : '' %>"><a href="/">Home</a></li>
         <li class="<%= currentPath.startsWith('/shop') ? 'active' : '' %>"><a href="/shop">Shop</a></li>
         <li class="<%= currentPath.startsWith('/articles') ? 'active' : '' %>"><a href="/articles">Artikel</a></li>
