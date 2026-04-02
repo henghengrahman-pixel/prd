@@ -1,82 +1,147 @@
 <header>
   <div id="top-header">
     <div class="container">
-      <ul class="header-links pull-left">
-        <li><a href="tel:<%= settings.phone %>"><i class="fa fa-phone"></i> <%= settings.phone %></a></li>
-        <li><a href="mailto:<%= settings.email %>"><i class="fa fa-envelope-o"></i> <%= settings.email %></a></li>
-        <li><a href="/contact"><i class="fa fa-map-marker"></i> <%= settings.address %></a></li>
-      </ul>
-      <ul class="header-links pull-right">
-        <li><a href="#"><i class="fa fa-whatsapp"></i> <%= settings.whatsapp %></a></li>
-        <li><a href="/admin/login"><i class="fa fa-user-o"></i> Admin</a></li>
-      </ul>
+      <div class="top-header-wrap">
+        <ul class="header-links header-links-left">
+          <% if (settings.phone) { %>
+            <li>
+              <a href="tel:<%= settings.phone %>">
+                <i class="fa fa-phone"></i>
+                <span><%= settings.phone %></span>
+              </a>
+            </li>
+          <% } %>
+
+          <% if (settings.email) { %>
+            <li>
+              <a href="mailto:<%= settings.email %>">
+                <i class="fa fa-envelope-o"></i>
+                <span><%= settings.email %></span>
+              </a>
+            </li>
+          <% } %>
+
+          <% if (settings.address) { %>
+            <li class="hide-mobile">
+              <a href="/contact">
+                <i class="fa fa-map-marker"></i>
+                <span><%= settings.address %></span>
+              </a>
+            </li>
+          <% } %>
+        </ul>
+
+        <ul class="header-links header-links-right">
+          <% if (settings.whatsapp) { %>
+            <li>
+              <a href="https://wa.me/<%= String(settings.whatsapp).replace(/\D/g, '') %>" target="_blank" rel="noopener noreferrer">
+                <i class="fa fa-whatsapp"></i>
+                <span>WhatsApp</span>
+              </a>
+            </li>
+          <% } %>
+          <li>
+            <a href="/admin/login">
+              <i class="fa fa-user-o"></i>
+              <span>Admin</span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
+
   <div id="header">
     <div class="container">
-      <div class="row">
-        <div class="col-md-3">
-          <div class="header-logo">
-            <a href="/" class="logo">
-              <img src="<%= settings.logo %>" alt="<%= settings.storeName %>">
+      <div class="header-wrap">
+        <div class="header-logo">
+          <a href="/" class="logo" aria-label="<%= settings.storeName %>">
+            <img src="<%= settings.logo %>" alt="<%= settings.storeName %>">
+          </a>
+        </div>
+
+        <div class="header-search">
+          <form method="get" action="/shop" class="search-form">
+            <label class="sr-only" for="category-select">Kategori</label>
+            <select class="input-select" id="category-select" name="category">
+              <option value="">All Categories</option>
+              <% categories.forEach(function(cat){ %>
+                <option value="<%= cat.name %>" <%= (typeof category !== 'undefined' && category === cat.name) ? 'selected' : '' %>>
+                  <%= cat.name %>
+                </option>
+              <% }) %>
+            </select>
+
+            <label class="sr-only" for="search-input">Cari produk</label>
+            <input
+              id="search-input"
+              class="input"
+              type="text"
+              name="q"
+              value="<%= typeof query !== 'undefined' ? query : '' %>"
+              placeholder="Cari produk..."
+            >
+
+            <button class="search-btn" type="submit">Cari</button>
+          </form>
+        </div>
+
+        <div class="header-ctn">
+          <div class="cart-area dropdown">
+            <a href="/cart" class="cart-toggle" aria-label="Lihat keranjang">
+              <i class="fa fa-shopping-cart"></i>
+              <span>Keranjang</span>
+              <div class="qty"><%= cartCount %></div>
             </a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="header-search">
-            <form method="get" action="/shop">
-              <select class="input-select" name="category">
-                <option value="">All Categories</option>
-                <% categories.forEach(function(cat){ %>
-                  <option value="<%= cat.name %>" <%= (typeof category !== 'undefined' && category===cat.name)?'selected':'' %>><%= cat.name %></option>
-                <% }) %>
-              </select>
-              <input class="input" name="q" value="<%= typeof query !== 'undefined' ? query : '' %>" placeholder="Search here">
-              <button class="search-btn">Search</button>
-            </form>
-          </div>
-        </div>
-        <div class="col-md-3 clearfix">
-          <div class="header-ctn">
-            <div class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                <i class="fa fa-shopping-cart"></i>
-                <span>Your Cart</span>
-                <div class="qty"><%= cartCount %></div>
-              </a>
-              <div class="cart-dropdown">
-                <div class="cart-list">
-                  <% if (cart.length) { cart.slice(0,3).forEach(function(item){ %>
+
+            <div class="cart-dropdown">
+              <div class="cart-list">
+                <% if (cart.length) { %>
+                  <% cart.slice(0, 3).forEach(function(item){ %>
                     <div class="product-widget">
-                      <div class="product-img"><img src="<%= item.thumbnail %>" alt="<%= item.name %>"></div>
+                      <div class="product-img">
+                        <img src="<%= item.thumbnail %>" alt="<%= item.name %>">
+                      </div>
                       <div class="product-body">
-                        <h3 class="product-name"><a href="/product/<%= item.slug %>"><%= item.name %></a></h3>
-                        <h4 class="product-price"><span class="qty"><%= item.qty %>x</span>THB <%= item.price_thb.toLocaleString('en-US') %></h4>
+                        <h3 class="product-name">
+                          <a href="/product/<%= item.slug %>"><%= item.name %></a>
+                        </h3>
+                        <h4 class="product-price">
+                          <span class="qty"><%= item.qty %>x</span>
+                          THB <%= item.price_thb.toLocaleString('en-US') %>
+                        </h4>
                       </div>
                     </div>
-                  <% }) } else { %>
-                    <p>Cart is empty.</p>
-                  <% } %>
-                </div>
-                <div class="cart-summary">
-                  <small><%= cartCount %> Item(s) selected</small>
-                  <h5>SUBTOTAL: THB <%= cartTotals.total_thb.toLocaleString('en-US') %></h5>
-                </div>
-                <div class="cart-btns">
-                  <a href="/cart">View Cart</a>
-                  <a href="/checkout">Checkout <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
+                  <% }) %>
+                <% } else { %>
+                  <p class="empty-cart-text">Keranjang masih kosong.</p>
+                <% } %>
+              </div>
+
+              <div class="cart-summary">
+                <small><%= cartCount %> item dipilih</small>
+                <h5>SUBTOTAL: THB <%= cartTotals.total_thb.toLocaleString('en-US') %></h5>
+              </div>
+
+              <div class="cart-btns">
+                <a href="/cart">Lihat Cart</a>
+                <a href="/checkout">Checkout <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div>
-            <div class="menu-toggle">
-              <a href="#"><i class="fa fa-bars"></i><span>Menu</span></a>
-            </div>
+          </div>
+
+          <div class="menu-toggle">
+            <a href="#navigation" aria-label="Buka menu navigasi">
+              <i class="fa fa-bars"></i>
+              <span>Menu</span>
+            </a>
           </div>
         </div>
       </div>
     </div>
   </div>
 </header>
+
 <nav id="navigation">
   <div class="container">
     <div id="responsive-nav">
@@ -90,8 +155,11 @@
     </div>
   </div>
 </nav>
-<div class="section"><div class="container">
-  <% if (flash) { %>
-    <div class="alert alert-<%= flash.type %> flash-alert"><%= flash.message %></div>
-  <% } %>
-</div></div>
+
+<div class="section flash-section">
+  <div class="container">
+    <% if (flash) { %>
+      <div class="alert alert-<%= flash.type %> flash-alert"><%= flash.message %></div>
+    <% } %>
+  </div>
+</div>
