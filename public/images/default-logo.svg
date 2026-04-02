@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="420" height="120" viewBox="0 0 420 120">
-  <rect width="420" height="120" rx="12" fill="#0f141a"/>
-  <rect x="6" y="6" width="408" height="108" rx="10" fill="none" stroke="#d8a318" stroke-width="4"/>
-  <circle cx="42" cy="60" r="24" fill="#d8a318"/>
-  <text x="80" y="58" fill="#f7f7f7" font-size="34" font-family="Arial" font-weight="700">NEUTRAL</text>
-  <text x="80" y="90" fill="#d8a318" font-size="24" font-family="Arial" font-weight="700">PORTAL CMS</text>
-</svg>
