@@ -3491,3 +3491,111 @@ body {
     font-size: 11px;
   }
 }
+
+/* =========================
+   FORCE 2 GRID PRODUCT MOBILE
+========================= */
+
+@media only screen and (max-width: 767px) {
+  .home-products-section .col-md-3.col-sm-6.col-xs-6,
+  .recommended-products-section .col-md-3.col-sm-6.col-xs-6,
+  .shop-page-section .col-md-3.col-sm-6.col-xs-6,
+  .section .col-md-3.col-sm-6.col-xs-6 {
+    width: 50% !important;
+    float: left !important;
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+  }
+
+  .home-products-section .row,
+  .recommended-products-section .row,
+  .shop-page-section .row,
+  .section .row {
+    margin-left: -6px !important;
+    margin-right: -6px !important;
+  }
+
+  .product {
+    margin: 8px 0 !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+  }
+
+  .product .product-img > img {
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  .product .product-body {
+    padding: 10px 8px !important;
+  }
+
+  .product .product-body .product-category {
+    font-size: 10px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .product .product-body .product-name {
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+    min-height: 34px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .product .product-body .product-price {
+    font-size: 14px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .product .product-body .product-price .product-old-price {
+    display: block !important;
+    font-size: 11px !important;
+    margin-top: 4px !important;
+  }
+
+  .product .product-body .product-btns {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    flex-wrap: wrap !important;
+  }
+
+  .product .product-body .product-btns > button,
+  .product .product-body .product-btns > a {
+    width: 30px !important;
+    height: 30px !important;
+    line-height: 30px !important;
+  }
+
+  .product .add-to-cart {
+    position: static !important;
+    transform: none !important;
+    background: #fff !important;
+    padding: 0 8px 10px !important;
+  }
+
+  .product:hover .add-to-cart {
+    transform: none !important;
+  }
+
+  .product .add-to-cart .add-to-cart-btn {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 36px !important;
+    font-size: 11px !important;
+    border-radius: 10px !important;
+    padding: 0 10px !important;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .home-products-section .col-md-3.col-sm-6.col-xs-6,
+  .recommended-products-section .col-md-3.col-sm-6.col-xs-6,
+  .shop-page-section .col-md-3.col-sm-6.col-xs-6,
+  .section .col-md-3.col-sm-6.col-xs-6 {
+    width: 50% !important;
+    float: left !important;
+  }
+}
