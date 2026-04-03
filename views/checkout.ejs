@@ -1,18 +1,101 @@
 <%- include('partials/head') %>
 <%- include('partials/header') %>
-<div class="section"><div class="container"><div class="row"><div class="col-md-7"><div class="billing-details"><div class="section-title"><h3 class="title">Checkout</h3></div>
-<form method="post" action="/checkout">
-  <div class="form-group"><input class="input" name="customer_name" placeholder="Nama" required></div>
-  <div class="form-group"><input class="input" name="whatsapp" placeholder="WhatsApp" required></div>
-  <div class="form-group"><textarea class="input" name="address" placeholder="Alamat" required></textarea></div>
-  <div class="form-group"><textarea class="input" name="note" placeholder="Catatan"></textarea></div>
-  <button class="primary-btn order-submit">Place order</button>
-</form>
-</div></div><div class="col-md-5 order-details"><div class="section-title text-center"><h3 class="title">Order Summary</h3></div><div class="order-summary">
-  <div class="order-col"><div><strong>PRODUCT</strong></div><div><strong>TOTAL</strong></div></div><div class="order-products">
-  <% cart.forEach(function(item){ %><div class="order-col"><div><%= item.qty %>x <%= item.name %></div><div>THB <%= item.line_total_thb.toLocaleString('en-US') %></div></div><% }) %>
+
+<section class="section checkout-page-section">
+  <div class="container">
+    <div class="checkout-page-header">
+      <div class="section-title">
+        <h1 class="title">Checkout</h1>
+      </div>
+      <p class="checkout-page-subtitle">
+        Lengkapi data pesananmu untuk melanjutkan proses checkout dengan cepat dan nyaman.
+      </p>
+    </div>
+
+    <div class="row checkout-page-row">
+      <div class="col-md-7 col-sm-12 col-xs-12">
+        <div class="checkout-form-card">
+          <div class="section-title">
+            <h3 class="title">Data Pembeli</h3>
+          </div>
+
+          <form method="post" action="/checkout" class="checkout-form">
+            <div class="form-group">
+              <label class="checkout-label">Nama</label>
+              <input class="input" name="customer_name" placeholder="Masukkan nama lengkap" required>
+            </div>
+
+            <div class="form-group">
+              <label class="checkout-label">WhatsApp</label>
+              <input class="input" name="whatsapp" placeholder="Masukkan nomor WhatsApp" required>
+            </div>
+
+            <div class="form-group">
+              <label class="checkout-label">Alamat</label>
+              <textarea class="input" name="address" placeholder="Masukkan alamat lengkap" required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="checkout-label">Catatan</label>
+              <textarea class="input" name="note" placeholder="Catatan tambahan untuk pesanan (opsional)"></textarea>
+            </div>
+
+            <button class="primary-btn checkout-submit-btn" type="submit">
+              Place Order
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-md-5 col-sm-12 col-xs-12">
+        <div class="checkout-summary-card">
+          <div class="section-title text-center">
+            <h3 class="title">Order Summary</h3>
+          </div>
+
+          <div class="order-summary">
+            <div class="order-col order-head">
+              <div><strong>Product</strong></div>
+              <div><strong>Total</strong></div>
+            </div>
+
+            <div class="order-products">
+              <% if (cart && cart.length) { %>
+                <% cart.forEach(function(item){ %>
+                  <div class="order-col">
+                    <div class="checkout-order-product">
+                      <span class="checkout-order-qty"><%= item.qty %>x</span>
+                      <span><%= item.name %></span>
+                    </div>
+                    <div>THB <%= item.line_total_thb.toLocaleString('en-US') %></div>
+                  </div>
+                <% }) %>
+              <% } else { %>
+                <div class="order-col">
+                  <div>Keranjang kosong</div>
+                  <div>-</div>
+                </div>
+              <% } %>
+            </div>
+
+            <div class="order-col">
+              <div><strong>Total THB</strong></div>
+              <div><strong class="order-total"><%= cartTotals.total_thb.toLocaleString('en-US') %></strong></div>
+            </div>
+
+            <div class="order-col">
+              <div><strong>Total IDR</strong></div>
+              <div><strong class="order-total"><%= cartTotals.total_idr.toLocaleString('en-US') %></strong></div>
+            </div>
+          </div>
+
+          <div class="checkout-summary-note">
+            Pastikan data yang dimasukkan sudah benar agar pesanan diproses lebih cepat.
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="order-col"><div><strong>TOTAL THB</strong></div><div><strong class="order-total"><%= cartTotals.total_thb.toLocaleString('en-US') %></strong></div></div>
-  <div class="order-col"><div><strong>TOTAL IDR</strong></div><div><strong class="order-total"><%= cartTotals.total_idr.toLocaleString('en-US') %></strong></div></div>
-</div></div></div></div></div>
+</section>
+
 <%- include('partials/footer') %>
