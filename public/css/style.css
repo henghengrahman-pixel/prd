@@ -4052,3 +4052,20 @@ textarea.input {
     padding: 0 10px !important;
   }
 }
+#mobile-menu-toggle-sticky,
+#mobile-menu-toggle,
+.mobile-header-button,
+.menu-toggle-btn {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+.mobile-header-actions,
+.mobile-header-icon {
+  position: relative;
+  z-index: 99991 !important;
+}
+
+#responsive-nav {
+  pointer-events: auto !important;
+}
