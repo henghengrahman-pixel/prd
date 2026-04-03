@@ -100,6 +100,37 @@
   </div>
 </nav>
 
+<div class="mobile-header-bar">
+  <div class="mobile-header-inner">
+    <a href="/" class="mobile-brand" aria-label="<%= settings.storeName %>">
+      <img src="<%= settings.logo %>" alt="<%= settings.storeName %>">
+    </a>
+
+    <form method="get" action="/shop" class="mobile-search-form">
+      <button type="submit" class="mobile-search-icon" aria-label="Cari">
+        <i class="fa fa-search"></i>
+      </button>
+      <input
+        type="text"
+        name="q"
+        value="<%= typeof query !== 'undefined' ? query : '' %>"
+        placeholder="Cari produk atau toko"
+      >
+    </form>
+
+    <div class="mobile-header-actions">
+      <a href="/cart" class="mobile-header-icon" aria-label="Keranjang">
+        <i class="fa fa-shopping-cart"></i>
+        <span class="mobile-badge"><%= cartCount %></span>
+      </a>
+
+      <button type="button" id="mobile-menu-toggle-sticky" class="mobile-header-icon mobile-header-button" aria-label="Buka menu">
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
 <div class="section flash-section">
   <div class="container">
     <% if (flash) { %>
