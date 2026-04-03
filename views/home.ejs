@@ -1,11 +1,16 @@
 <%- include('partials/head') %>
 <%- include('partials/header') %>
 
-<!-- PRODUK UNGGULAN SLIDER -->
+<!-- PRODUK UNGGULAN -->
 <section class="section home-featured-slider-section">
   <div class="container">
-    <div class="section-title">
-      <h1 class="title">Produk Unggulan</h1>
+    <div class="home-section-head">
+      <div class="section-title">
+        <h1 class="title">Produk Unggulan</h1>
+      </div>
+      <p class="home-section-subtitle">
+        Pilihan produk terbaik yang sedang banyak diminati customer.
+      </p>
     </div>
 
     <% if (featured && featured.length) { %>
@@ -32,11 +37,16 @@
   </div>
 </section>
 
-<!-- SHOP / SEMUA PRODUK -->
+<!-- SHOP -->
 <section class="section home-products-section">
   <div class="container">
-    <div class="section-title">
-      <h2 class="title">Shop</h2>
+    <div class="home-section-head">
+      <div class="section-title">
+        <h2 class="title">Shop</h2>
+      </div>
+      <p class="home-section-subtitle">
+        Temukan produk pilihan dengan tampilan yang rapi, ringan, dan nyaman untuk belanja di mobile.
+      </p>
     </div>
 
     <div class="row">
@@ -55,7 +65,7 @@
       <% } %>
     </div>
 
-    <div class="text-center" style="margin-top:20px;">
+    <div class="text-center home-shop-more">
       <a href="/shop" class="primary-btn">Lihat Semua Produk</a>
     </div>
   </div>
@@ -64,8 +74,13 @@
 <!-- ARTIKEL -->
 <section class="section home-articles-section">
   <div class="container">
-    <div class="section-title">
-      <h2 class="title">Artikel</h2>
+    <div class="home-section-head">
+      <div class="section-title">
+        <h2 class="title">Artikel</h2>
+      </div>
+      <p class="home-section-subtitle">
+        Baca informasi dan panduan terbaru seputar produk, tips, dan rekomendasi pilihan.
+      </p>
     </div>
 
     <div class="row">
@@ -73,23 +88,27 @@
         <% articles.forEach(function(article){ %>
           <div class="col-md-4 col-sm-6 col-xs-12">
             <article class="admin-card article-card home-article-card">
-              <a href="/article/<%= article.slug %>">
-                <img src="<%= article.thumbnail %>" alt="<%= article.title %>">
+              <a href="/article/<%= article.slug %>" class="article-thumb-link">
+                <img src="<%= article.thumbnail %>" alt="<%= article.title %>" loading="lazy">
               </a>
 
               <div class="article-card-content">
-                <h3>
+                <h3 class="article-card-title">
                   <a href="/article/<%= article.slug %>"><%= article.title %></a>
                 </h3>
-                <p><%= article.excerpt %></p>
-                <a href="/article/<%= article.slug %>">Baca Selengkapnya</a>
+                <p class="article-card-excerpt"><%= article.excerpt %></p>
+                <a href="/article/<%= article.slug %>" class="article-read-more">
+                  Baca Selengkapnya <i class="fa fa-arrow-circle-right"></i>
+                </a>
               </div>
             </article>
           </div>
         <% }) %>
       <% } else { %>
-        <div class="col-md-12 text-center">
-          <p>Belum ada artikel.</p>
+        <div class="col-md-12">
+          <div class="empty-state-box text-center">
+            <p>Belum ada artikel.</p>
+          </div>
         </div>
       <% } %>
     </div>
