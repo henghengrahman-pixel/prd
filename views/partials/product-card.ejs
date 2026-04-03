@@ -50,16 +50,19 @@
     </h4>
 
     <div class="product-actions">
-      <a href="/product/<%= product.slug %>" class="detail-btn" aria-label="Lihat detail <%= product.name %>">
-        <i class="fa fa-eye"></i>
-        <span>Detail</span>
-      </a>
-
       <% if (product.status === 'sold_out') { %>
+        <button class="buy-now-btn" type="button" disabled>
+          Sold Out
+        </button>
+
         <button class="add-to-cart-btn" type="button" disabled>
           Sold Out
         </button>
       <% } else { %>
+        <a href="/product/<%= product.slug %>" class="buy-now-btn">
+          Beli Sekarang
+        </a>
+
         <form method="post" action="/cart/add" class="product-card-cart-form">
           <input type="hidden" name="product_id" value="<%= product.id %>">
           <input type="hidden" name="qty" value="1">
@@ -68,6 +71,11 @@
           </button>
         </form>
       <% } %>
+
+      <a href="/product/<%= product.slug %>" class="detail-btn" aria-label="Lihat detail <%= product.name %>">
+        <i class="fa fa-eye"></i>
+        <span>Detail</span>
+      </a>
     </div>
   </div>
 </div>
