@@ -2,6 +2,21 @@ const { getProductById } = require('../helpers/store');
 const { getCart, saveCart } = require('../helpers/cart');
 const { setFlash } = require('../middleware');
 
+function cartPage(req, res) {
+  const cart = getCart(req);
+
+  const cartTotals = cart.reduce(
+    (acc, item) => {
+      acc.total_thb += Number(item.line_total_thb || 0);
+      acc.total_idr += Number(item.line_total_idr || 0);
+      return acc;
+    },
+    { total_thb: 0, total_idr: 0 }
+  );
+
+  res.render('cart', { cart, cartTotals });
+}
+
 function buildCartItem(product, quantity) {
   return {
     product_id: product.id,
@@ -17,31 +32,8 @@ function buildCartItem(product, quantity) {
   };
 }
 
-function cartPage(req, res) {
-  const cart = getCart(req);
-
-  const summary = cart.reduce(
-    (acc, item) => {
-      acc.total_qty += Number(item.qty || 0);
-      acc.total_thb += Number(item.line_total_thb || 0);
-      acc.total_idr += Number(item.line_total_idr || 0);
-      return acc;
-    },
-    {
-      total_qty: 0,
-      total_thb: 0,
-      total_idr: 0
-    }
-  );
-
-  return res.render('cart', {
-    cart,
-    summary
-  });
-}
-
 function addOrUpdateCartItem(cart, product, quantity) {
-  const existing = cart.find(item => String(item.product_id) === String(product.id));
+  const existing = cart.find(item => item.product_id === product.id);
 
   if (existing) {
     existing.qty += quantity;
@@ -64,25 +56,21 @@ function addToCart(req, res) {
   }
 
   if (product.status === 'sold_out') {
-    setFlash(req, 'danger', 'Produk sold out tidak bisa dimasukkan ke keranjang.');
+    setFlash(req, 'danger', 'Produk sold out.');
     return res.redirect(`/product/${product.slug}`);
   }
 
-  const quantity = Math.max(1, parseInt(qty, 10) || 1);
+  const quantity = Math.max(1, Number(qty || 1));
   const cart = getCart(req);
 
   addOrUpdateCartItem(cart, product, quantity);
   saveCart(req, cart);
 
   setFlash(req, 'success', 'Produk berhasil ditambahkan ke keranjang.');
-  return res.redirect('/cart');
+  res.redirect('/cart');
 }
 
-/*
-  BELI SEKARANG:
-  - langsung isi cart hanya dengan produk ini
-  - lalu redirect ke checkout
-*/
+/* BELI SEKARANG */
 function buyNow(req, res) {
   const { product_id, qty = 1 } = req.body;
   const product = getProductById(product_id);
@@ -93,53 +81,46 @@ function buyNow(req, res) {
   }
 
   if (product.status === 'sold_out') {
-    setFlash(req, 'danger', 'Produk sold out tidak bisa dibeli.');
+    setFlash(req, 'danger', 'Produk sold out.');
     return res.redirect(`/product/${product.slug}`);
   }
 
-  const quantity = Math.max(1, parseInt(qty, 10) || 1);
+  const quantity = Math.max(1, Number(qty || 1));
 
+  // Cart diisi hanya produk ini
   const cart = [buildCartItem(product, quantity)];
   saveCart(req, cart);
 
-  return res.redirect('/checkout');
+  res.redirect('/checkout');
 }
 
 function updateCart(req, res) {
   const quantities = req.body.qty || {};
-  const currentCart = getCart(req);
 
-  const updatedCart = currentCart
-    .map(item => {
-      const newQty = Math.max(
-        1,
-        parseInt(quantities[item.product_id], 10) || parseInt(item.qty, 10) || 1
-      );
+  const cart = getCart(req).map(item => {
+    const qty = Math.max(1, Number(quantities[item.product_id] || item.qty || 1));
 
-      return {
-        ...item,
-        qty: newQty,
-        line_total_thb: newQty * Number(item.price_thb || 0),
-        line_total_idr: newQty * Number(item.price_idr || 0)
-      };
-    })
-    .filter(item => item.qty > 0);
+    return {
+      ...item,
+      qty,
+      line_total_thb: qty * Number(item.price_thb || 0),
+      line_total_idr: qty * Number(item.price_idr || 0)
+    };
+  });
 
-  saveCart(req, updatedCart);
+  saveCart(req, cart);
   setFlash(req, 'success', 'Keranjang berhasil diupdate.');
-  return res.redirect('/cart');
+  res.redirect('/cart');
 }
 
 function removeFromCart(req, res) {
-  const { productId } = req.params;
-
   const cart = getCart(req).filter(
-    item => String(item.product_id) !== String(productId)
+    item => item.product_id !== req.params.productId
   );
 
   saveCart(req, cart);
-  setFlash(req, 'success', 'Item berhasil dihapus dari keranjang.');
-  return res.redirect('/cart');
+  setFlash(req, 'success', 'Item dihapus dari keranjang.');
+  res.redirect('/cart');
 }
 
 module.exports = {
