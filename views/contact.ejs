@@ -20,19 +20,45 @@
                 <span class="contact-icon"><i class="fa fa-whatsapp"></i></span>
                 <div class="contact-text">
                   <span class="contact-label">WhatsApp</span>
-                  <a href="https://wa.me/<%= String(settings.whatsapp).replace(/\D/g, '') %>" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="https://wa.me/<%= String(settings.whatsapp).replace(/\D/g, '') %>"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <%= settings.whatsapp %>
                   </a>
                 </div>
               </li>
             <% } %>
 
-            <% if (settings.phone) { %>
+            <% if (settings.telegram) { %>
               <li>
-                <span class="contact-icon"><i class="fa fa-phone"></i></span>
+                <span class="contact-icon telegram-icon"><i class="fa fa-telegram"></i></span>
                 <div class="contact-text">
-                  <span class="contact-label">Telepon</span>
-                  <a href="tel:<%= settings.phone %>"><%= settings.phone %></a>
+                  <span class="contact-label">Telegram</span>
+                  <a
+                    href="https://t.me/<%= String(settings.telegram).replace(/^@/, '') %>"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    @<%= String(settings.telegram).replace(/^@/, '') %>
+                  </a>
+                </div>
+              </li>
+            <% } %>
+
+            <% if (settings.telegramChannel) { %>
+              <li>
+                <span class="contact-icon telegram-icon"><i class="fa fa-telegram"></i></span>
+                <div class="contact-text">
+                  <span class="contact-label">Channel / Grup Store</span>
+                  <a
+                    href="https://t.me/<%= String(settings.telegramChannel).replace(/^@/, '') %>"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Gabung di @<%= String(settings.telegramChannel).replace(/^@/, '') %>
+                  </a>
                 </div>
               </li>
             <% } %>
@@ -67,15 +93,40 @@
             <%= settings.seo && settings.seo.metaDescription ? settings.seo.metaDescription : 'Selamat datang di toko kami. Kami siap membantu kebutuhan belanja Anda dengan pelayanan terbaik.' %>
           </p>
 
-          <div class="contact-action-box">
+          <div class="contact-action-box contact-action-stack">
             <% if (settings.whatsapp) { %>
               <a
                 href="https://wa.me/<%= String(settings.whatsapp).replace(/\D/g, '') %>"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="primary-btn"
+                class="primary-btn contact-action-btn"
               >
-                Hubungi via WhatsApp
+                <i class="fa fa-whatsapp"></i>
+                <span>Hubungi via WhatsApp</span>
+              </a>
+            <% } %>
+
+            <% if (settings.telegram) { %>
+              <a
+                href="https://t.me/<%= String(settings.telegram).replace(/^@/, '') %>"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="telegram-btn contact-action-btn"
+              >
+                <i class="fa fa-telegram"></i>
+                <span>Chat via Telegram</span>
+              </a>
+            <% } %>
+
+            <% if (settings.telegramChannel) { %>
+              <a
+                href="https://t.me/<%= String(settings.telegramChannel).replace(/^@/, '') %>"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="telegram-outline-btn contact-action-btn"
+              >
+                <i class="fa fa-telegram"></i>
+                <span>Ayo Gabung di Store Telegram Kami</span>
               </a>
             <% } %>
           </div>
