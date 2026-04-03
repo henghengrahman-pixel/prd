@@ -1,4 +1,4 @@
-<% 
+<%
   const cleanWhatsapp = settings.whatsapp ? String(settings.whatsapp).replace(/\D/g, '') : '';
   const cleanTelegram = settings.telegram ? String(settings.telegram).replace('@', '').trim() : '';
 %>
@@ -95,7 +95,7 @@
                 class="desktop-telegram-link"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Chat Telegram"
+                aria-label="Chat Telegram <%= settings.storeName %>"
               >
                 <i class="fa fa-telegram"></i>
                 <span>Telegram</span>
