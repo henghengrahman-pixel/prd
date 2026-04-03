@@ -51,4 +51,64 @@ function addToCart(req, res) {
   addOrUpdateCartItem(cart, product, quantity);
   saveCart(req, cart);
 
-  setFlash(req, 'success', 'Produk berhasil ditambahkan ke ker
+  setFlash(req, 'success', 'Produk berhasil ditambahkan ke keranjang.');
+  res.redirect('/cart');
+}
+
+/* BELI SEKARANG → masuk cart → langsung checkout */
+function buyNow(req, res) {
+  const { product_id, qty = 1 } = req.body;
+  const product = getProductById(product_id);
+
+  if (!product || !product.visible) {
+    setFlash(req, 'danger', 'Product not found.');
+    return res.redirect('/shop');
+  }
+
+  if (product.status === 'sold_out') {
+    setFlash(req, 'danger', 'Produk sold out tidak bisa dibeli.');
+    return res.redirect(`/product/${product.slug}`);
+  }
+
+  const quantity = Math.max(1, Number(qty || 1));
+  const cart = getCart(req);
+
+  addOrUpdateCartItem(cart, product, quantity);
+  saveCart(req, cart);
+
+  res.redirect('/checkout');
+}
+
+function updateCart(req, res) {
+  const quantities = req.body.qty || {};
+
+  const cart = getCart(req).map(item => {
+    const qty = Math.max(1, Number(quantities[item.product_id] || item.qty || 1));
+
+    return {
+      ...item,
+      qty,
+      line_total_thb: qty * Number(item.price_thb || 0),
+      line_total_idr: qty * Number(item.price_idr || 0)
+    };
+  });
+
+  saveCart(req, cart);
+  setFlash(req, 'success', 'Keranjang berhasil diupdate.');
+  res.redirect('/cart');
+}
+
+function removeFromCart(req, res) {
+  const cart = getCart(req).filter(item => item.product_id !== req.params.productId);
+  saveCart(req, cart);
+  setFlash(req, 'success', 'Item dihapus dari keranjang.');
+  res.redirect('/cart');
+}
+
+module.exports = {
+  cartPage,
+  addToCart,
+  buyNow,
+  updateCart,
+  removeFromCart
+};
