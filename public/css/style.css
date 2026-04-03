@@ -2483,3 +2483,30 @@ textarea.input {
     line-height: 1.7;
   }
 }
+.home-shop-more {
+  margin-top: 20px;
+}
+
+.home-products-section .empty-state-box,
+.home-articles-section .empty-state-box,
+.home-featured-slider-section .empty-state-box {
+  padding: 26px;
+}
+
+.home-products-section .empty-state-box h3,
+.home-articles-section .empty-state-box h3,
+.home-featured-slider-section .empty-state-box h3 {
+  margin-bottom: 8px;
+}
+
+.home-products-section .empty-state-box p,
+.home-articles-section .empty-state-box p,
+.home-featured-slider-section .empty-state-box p {
+  margin-bottom: 0;
+}
+
+@media only screen and (max-width: 767px) {
+  .home-shop-more {
+    margin-top: 16px;
+  }
+}
