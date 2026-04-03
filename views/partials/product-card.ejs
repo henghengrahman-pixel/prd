@@ -1,15 +1,31 @@
+<%
+  const productSlug = product && product.slug ? product.slug : '';
+  const productUrl = productSlug ? `/product/${productSlug}` : '#';
+
+  const priceThb = Number(product.price_thb || 0);
+  const priceIdr = Number(product.price_idr || 0);
+  const comparePriceThb = Number(product.compare_price_thb || 0);
+  const comparePriceIdr = Number(product.compare_price_idr || 0);
+
+  const hasDiscount = comparePriceThb > priceThb && priceThb > 0;
+  const discountPercent = hasDiscount
+    ? Math.round(((comparePriceThb - priceThb) / comparePriceThb) * 100)
+    : 0;
+
+  const isSoldOut = product.status === 'sold_out';
+%>
+
 <div class="product product-card-clean">
   <div class="product-img">
-    <a href="/product/<%= product.slug %>" class="product-image-link">
-      <img src="<%= product.thumbnail %>" alt="<%= product.name %>" loading="lazy">
-    </a>
-
-    <% 
-      const hasDiscount = product.compare_price_thb && product.price_thb && product.compare_price_thb > product.price_thb;
-      const discountPercent = hasDiscount
-        ? Math.round(((product.compare_price_thb - product.price_thb) / product.compare_price_thb) * 100)
-        : 0;
-    %>
+    <% if (productSlug) { %>
+      <a href="<%= productUrl %>" class="product-image-link" aria-label="<%= product.name %>">
+        <img src="<%= product.thumbnail %>" alt="<%= product.name %>" loading="lazy">
+      </a>
+    <% } else { %>
+      <span class="product-image-link">
+        <img src="<%= product.thumbnail %>" alt="<%= product.name %>" loading="lazy">
+      </span>
+    <% } %>
 
     <% if (product.is_new) { %>
       <div class="product-label">
@@ -28,29 +44,35 @@
     <% } %>
 
     <h3 class="product-name">
-      <a href="/product/<%= product.slug %>"><%= product.name %></a>
+      <% if (productSlug) { %>
+        <a href="<%= productUrl %>"><%= product.name %></a>
+      <% } else { %>
+        <span><%= product.name %></span>
+      <% } %>
     </h3>
 
     <h4 class="product-price">
-      THB <%= product.price_thb ? product.price_thb.toLocaleString('en-US') : '0' %>
-      <% if (product.price_idr) { %>
-        <small>| IDR <%= product.price_idr.toLocaleString('en-US') %></small>
+      THB <%= priceThb.toLocaleString('en-US') %>
+
+      <% if (priceIdr > 0) { %>
+        <small>| IDR <%= priceIdr.toLocaleString('en-US') %></small>
       <% } %>
 
-      <% if (product.compare_price_thb || product.compare_price_idr) { %>
+      <% if (comparePriceThb > 0 || comparePriceIdr > 0) { %>
         <del class="product-old-price">
-          <% if (product.compare_price_thb) { %>
-            THB <%= product.compare_price_thb.toLocaleString('en-US') %>
+          <% if (comparePriceThb > 0) { %>
+            THB <%= comparePriceThb.toLocaleString('en-US') %>
           <% } %>
-          <% if (product.compare_price_idr) { %>
-            | IDR <%= product.compare_price_idr.toLocaleString('en-US') %>
+
+          <% if (comparePriceIdr > 0) { %>
+            | IDR <%= comparePriceIdr.toLocaleString('en-US') %>
           <% } %>
         </del>
       <% } %>
     </h4>
 
     <div class="product-actions">
-      <% if (product.status === 'sold_out') { %>
+      <% if (isSoldOut) { %>
         <button class="buy-now-btn" type="button" disabled>
           Sold Out
         </button>
@@ -59,23 +81,36 @@
           Sold Out
         </button>
       <% } else { %>
-        <a href="/product/<%= product.slug %>" class="buy-now-btn">
-          Beli Sekarang
-        </a>
+        <% if (productSlug) { %>
+          <a href="<%= productUrl %>" class="buy-now-btn">
+            Beli Sekarang
+          </a>
+        <% } else { %>
+          <button class="buy-now-btn" type="button" disabled>
+            Beli Sekarang
+          </button>
+        <% } %>
 
         <form method="post" action="/cart/add" class="product-card-cart-form">
           <input type="hidden" name="product_id" value="<%= product.id %>">
           <input type="hidden" name="qty" value="1">
           <button class="add-to-cart-btn" type="submit">
-            Add to Cart
+            Tambah ke Keranjang
           </button>
         </form>
       <% } %>
 
-      <a href="/product/<%= product.slug %>" class="detail-btn" aria-label="Lihat detail <%= product.name %>">
-        <i class="fa fa-eye"></i>
-        <span>Detail</span>
-      </a>
+      <% if (productSlug) { %>
+        <a href="<%= productUrl %>" class="detail-btn" aria-label="Lihat detail <%= product.name %>">
+          <i class="fa fa-eye"></i>
+          <span>Detail</span>
+        </a>
+      <% } else { %>
+        <span class="detail-btn" aria-hidden="true">
+          <i class="fa fa-eye"></i>
+          <span>Detail</span>
+        </span>
+      <% } %>
     </div>
   </div>
 </div>
