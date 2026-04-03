@@ -188,9 +188,13 @@
       THB <%= product.price_thb.toLocaleString('en-US') %>
     </div>
 
-    <a href="/checkout?product_id=<%= product.id %>&qty=1" class="mobile-buy-now">
-      Beli Sekarang
-    </a>
+   <form method="post" action="/buy-now" class="buy-now-form">
+  <input type="hidden" name="product_id" value="<%= product.id %>">
+  <input type="hidden" name="qty" value="1">
+  <button type="submit" class="buy-now-btn">
+    Beli Sekarang
+  </button>
+</form>
 
     <form method="post" action="/cart/add">
       <input type="hidden" name="product_id" value="<%= product.id %>">
