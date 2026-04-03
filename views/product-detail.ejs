@@ -60,18 +60,20 @@
 
           <div class="product-price-wrap">
             <h2 class="product-price">
-              THB <%= product.price_thb.toLocaleString('en-US') %>
+              THB <%= Number(product.price_thb || 0).toLocaleString('en-US') %>
+
               <% if (product.price_idr) { %>
-                <small>| IDR <%= product.price_idr.toLocaleString('en-US') %></small>
+                <small>| IDR <%= Number(product.price_idr || 0).toLocaleString('en-US') %></small>
               <% } %>
 
               <% if (product.compare_price_thb || product.compare_price_idr) { %>
                 <del class="product-old-price">
                   <% if (product.compare_price_thb) { %>
-                    THB <%= product.compare_price_thb.toLocaleString('en-US') %>
+                    THB <%= Number(product.compare_price_thb || 0).toLocaleString('en-US') %>
                   <% } %>
+
                   <% if (product.compare_price_idr) { %>
-                    | IDR <%= product.compare_price_idr.toLocaleString('en-US') %>
+                    | IDR <%= Number(product.compare_price_idr || 0).toLocaleString('en-US') %>
                   <% } %>
                 </del>
               <% } %>
@@ -96,14 +98,26 @@
                 Sold Out
               </button>
             <% } else { %>
-              <a href="/checkout?product_id=<%= product.id %>&qty=1" class="buy-now-btn">
-                Beli Sekarang
-              </a>
+              <form method="post" action="/buy-now" class="buy-now-form">
+                <input type="hidden" name="product_id" value="<%= product.id %>">
+                <input type="hidden" name="qty" value="1">
+                <button type="submit" class="buy-now-btn">
+                  Beli Sekarang
+                </button>
+              </form>
 
               <form method="post" action="/cart/add" class="add-to-cart-form">
                 <input type="hidden" name="product_id" value="<%= product.id %>">
+
                 <label class="sr-only" for="qty-input">Jumlah</label>
-                <input id="qty-input" type="number" name="qty" value="1" min="1" class="input qty-input">
+                <input
+                  id="qty-input"
+                  type="number"
+                  name="qty"
+                  value="1"
+                  min="1"
+                  class="input qty-input"
+                >
 
                 <button class="add-to-cart-btn" type="submit">
                   <i class="fa fa-shopping-cart"></i> Add to Cart
@@ -182,29 +196,29 @@
 </div>
 
 <% if (product.status !== 'sold_out') { %>
-<div class="mobile-buy-bar">
-  <div class="mobile-buy-bar-inner">
-    <div class="mobile-buy-price">
-      THB <%= product.price_thb.toLocaleString('en-US') %>
+  <div class="mobile-buy-bar">
+    <div class="mobile-buy-bar-inner">
+      <div class="mobile-buy-price">
+        THB <%= Number(product.price_thb || 0).toLocaleString('en-US') %>
+      </div>
+
+      <form method="post" action="/buy-now" class="mobile-buy-now-form">
+        <input type="hidden" name="product_id" value="<%= product.id %>">
+        <input type="hidden" name="qty" value="1">
+        <button type="submit" class="mobile-buy-now">
+          Beli Sekarang
+        </button>
+      </form>
+
+      <form method="post" action="/cart/add" class="mobile-add-cart-form">
+        <input type="hidden" name="product_id" value="<%= product.id %>">
+        <input type="hidden" name="qty" value="1">
+        <button class="mobile-add-cart" type="submit">
+          Cart
+        </button>
+      </form>
     </div>
-
-   <form method="post" action="/buy-now" class="buy-now-form">
-  <input type="hidden" name="product_id" value="<%= product.id %>">
-  <input type="hidden" name="qty" value="1">
-  <button type="submit" class="buy-now-btn">
-    Beli Sekarang
-  </button>
-</form>
-
-    <form method="post" action="/cart/add">
-      <input type="hidden" name="product_id" value="<%= product.id %>">
-      <input type="hidden" name="qty" value="1">
-      <button class="mobile-add-cart" type="submit">
-        Cart
-      </button>
-    </form>
   </div>
-</div>
 <% } %>
 
 <script>
@@ -218,7 +232,7 @@
     var modalBackdrop = document.getElementById('product-image-modal-backdrop');
     var mainPreview = document.getElementById('product-main-preview');
 
-    if (!mainImage || !thumbs.length) return;
+    if (!mainImage || !thumbs.length || !mainPreview) return;
 
     var currentIndex = 0;
     var touchStartX = 0;
@@ -233,7 +247,10 @@
 
       var newImage = thumbs[index].getAttribute('data-image');
       mainImage.setAttribute('src', newImage);
-      if (popupImage) popupImage.setAttribute('src', newImage);
+
+      if (popupImage) {
+        popupImage.setAttribute('src', newImage);
+      }
 
       if (window.innerWidth <= 767) {
         thumbs[index].scrollIntoView({
@@ -266,7 +283,10 @@
       if (!modal) return;
       modal.classList.add('is-open');
       document.body.classList.add('modal-open');
-      if (popupImage) popupImage.setAttribute('src', mainImage.getAttribute('src'));
+
+      if (popupImage) {
+        popupImage.setAttribute('src', mainImage.getAttribute('src'));
+      }
     }
 
     function closeModal() {
