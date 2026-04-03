@@ -2452,3 +2452,34 @@ textarea.input {
 .telegram-outline-btn:hover {
   opacity: 0.9;
 }
+
+.shop-page-header {
+  margin-bottom: 18px;
+}
+
+.shop-page-subtitle {
+  max-width: 760px;
+  margin: -4px 0 0;
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 15px;
+}
+
+.shop-empty-state h3 {
+  margin-bottom: 8px;
+}
+
+.shop-empty-state p {
+  margin-bottom: 18px;
+}
+
+@media only screen and (max-width: 767px) {
+  .shop-page-header {
+    margin-bottom: 14px;
+  }
+
+  .shop-page-subtitle {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+}
