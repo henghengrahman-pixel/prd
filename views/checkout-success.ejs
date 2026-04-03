@@ -1,4 +1,40 @@
 <%- include('partials/head') %>
 <%- include('partials/header') %>
-<div class="section"><div class="container"><div class="row"><div class="col-md-8 col-md-offset-2"><div class="admin-card text-center"><h2>Order berhasil dibuat</h2><p>Order ID: <strong><%= order.id %></strong></p><p>Terima kasih, <%= order.customer_name %>. Admin akan segera menghubungi Anda.</p><a class="primary-btn" href="/shop">Lanjut belanja</a></div></div></div></div></div>
+
+<section class="section order-success-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
+        <div class="admin-card order-success-card text-center">
+          <div class="order-success-icon">
+            <i class="fa fa-check-circle"></i>
+          </div>
+
+          <h1 class="order-success-title">Order Berhasil Dibuat</h1>
+
+          <p class="order-success-subtitle">
+            Terima kasih, <strong><%= order.customer_name %></strong>. Pesanan kamu sudah kami terima.
+          </p>
+
+          <div class="order-success-info">
+            <div class="order-success-info-item">
+              <span class="label-text">Order ID</span>
+              <strong class="value-text"><%= order.id %></strong>
+            </div>
+          </div>
+
+          <p class="order-success-note">
+            Admin akan segera menghubungi kamu untuk konfirmasi pesanan dan proses selanjutnya.
+          </p>
+
+          <div class="order-success-actions">
+            <a class="primary-btn" href="/shop">Lanjut Belanja</a>
+            <a class="secondary-success-btn" href="/">Kembali ke Home</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <%- include('partials/footer') %>
