@@ -9,26 +9,29 @@
       </div>
 
       <p class="shop-page-subtitle">
-        Temukan produk pilihan terbaik dengan tampilan yang rapi, cepat, dan nyaman untuk belanja di mobile maupun desktop.
+        Temukan produk pilihan terbaik dengan tampilan yang rapi, ringan, dan nyaman untuk belanja di desktop maupun mobile.
       </p>
     </div>
 
-    <div class="row">
-      <% if (products && products.length) { %>
+    <% if (products && products.length) { %>
+      <div class="row">
         <% products.forEach(function(product){ %>
           <div class="col-md-3 col-sm-6 col-xs-6">
             <%- include('partials/product-card', { product: product }) %>
           </div>
         <% }) %>
-      <% } else { %>
+      </div>
+    <% } else { %>
+      <div class="row">
         <div class="col-md-12">
           <div class="empty-box text-center shop-empty-state">
             <h3>Produk belum tersedia</h3>
-            <p>Tidak ada produk ditemukan saat ini. Coba lagi nanti atau gunakan pencarian untuk produk lain.</p>
+            <p>Tidak ada produk ditemukan saat ini. Silakan coba lagi nanti atau gunakan pencarian untuk produk lain.</p>
+            <a href="/" class="primary-btn">Kembali ke Beranda</a>
           </div>
         </div>
-      <% } %>
-    </div>
+      </div>
+    <% } %>
   </div>
 </section>
 
