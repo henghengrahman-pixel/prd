@@ -12,7 +12,7 @@
       </p>
     </div>
 
-    <% if (!cart.length) { %>
+    <% if (!cart || !cart.length) { %>
       <div class="empty-box text-center cart-empty-state">
         <h3>Keranjang kosong</h3>
         <p>Belum ada produk di keranjang. Yuk pilih produk terbaik untuk kamu.</p>
@@ -40,9 +40,16 @@
                       <tr>
                         <td>
                           <div class="cart-product-cell">
-                            <a href="/product/<%= item.slug || '' %>" class="cart-product-thumb">
-                              <img src="<%= item.thumbnail %>" alt="<%= item.name %>">
-                            </a>
+                            <% if (item.slug) { %>
+                              <a href="/product/<%= item.slug %>" class="cart-product-thumb" aria-label="<%= item.name %>">
+                                <img src="<%= item.thumbnail %>" alt="<%= item.name %>">
+                              </a>
+                            <% } else { %>
+                              <span class="cart-product-thumb">
+                                <img src="<%= item.thumbnail %>" alt="<%= item.name %>">
+                              </span>
+                            <% } %>
+
                             <div class="cart-product-info">
                               <h3 class="cart-product-name">
                                 <% if (item.slug) { %>
@@ -57,8 +64,8 @@
 
                         <td>
                           <div class="cart-price-block">
-                            <span>THB <%= item.price_thb.toLocaleString('en-US') %></span>
-                            <small>IDR <%= item.price_idr.toLocaleString('en-US') %></small>
+                            <span>THB <%= Number(item.price_thb || 0).toLocaleString('en-US') %></span>
+                            <small>IDR <%= Number(item.price_idr || 0).toLocaleString('en-US') %></small>
                           </div>
                         </td>
 
@@ -68,14 +75,14 @@
                             class="input cart-qty-input"
                             name="qty[<%= item.product_id %>]"
                             min="1"
-                            value="<%= item.qty %>"
+                            value="<%= Number(item.qty || 1) %>"
                           >
                         </td>
 
                         <td>
                           <div class="cart-price-block">
-                            <strong>THB <%= item.line_total_thb.toLocaleString('en-US') %></strong>
-                            <small>IDR <%= item.line_total_idr.toLocaleString('en-US') %></small>
+                            <strong>THB <%= Number(item.line_total_thb || 0).toLocaleString('en-US') %></strong>
+                            <small>IDR <%= Number(item.line_total_idr || 0).toLocaleString('en-US') %></small>
                           </div>
                         </td>
 
@@ -99,9 +106,15 @@
                 <% cart.forEach(function(item){ %>
                   <div class="mobile-cart-card">
                     <div class="mobile-cart-top">
-                      <a href="/product/<%= item.slug || '' %>" class="mobile-cart-thumb">
-                        <img src="<%= item.thumbnail %>" alt="<%= item.name %>">
-                      </a>
+                      <% if (item.slug) { %>
+                        <a href="/product/<%= item.slug %>" class="mobile-cart-thumb" aria-label="<%= item.name %>">
+                          <img src="<%= item.thumbnail %>" alt="<%= item.name %>">
+                        </a>
+                      <% } else { %>
+                        <span class="mobile-cart-thumb">
+                          <img src="<%= item.thumbnail %>" alt="<%= item.name %>">
+                        </span>
+                      <% } %>
 
                       <div class="mobile-cart-info">
                         <h3 class="mobile-cart-name">
@@ -113,8 +126,8 @@
                         </h3>
 
                         <div class="mobile-cart-price">
-                          <span>THB <%= item.price_thb.toLocaleString('en-US') %></span>
-                          <small>IDR <%= item.price_idr.toLocaleString('en-US') %></small>
+                          <span>THB <%= Number(item.price_thb || 0).toLocaleString('en-US') %></span>
+                          <small>IDR <%= Number(item.price_idr || 0).toLocaleString('en-US') %></small>
                         </div>
                       </div>
                     </div>
@@ -128,14 +141,14 @@
                           class="input cart-qty-input"
                           name="qty[<%= item.product_id %>]"
                           min="1"
-                          value="<%= item.qty %>"
+                          value="<%= Number(item.qty || 1) %>"
                         >
                       </div>
 
                       <div class="mobile-cart-total">
                         <span>Total</span>
-                        <strong>THB <%= item.line_total_thb.toLocaleString('en-US') %></strong>
-                        <small>IDR <%= item.line_total_idr.toLocaleString('en-US') %></small>
+                        <strong>THB <%= Number(item.line_total_thb || 0).toLocaleString('en-US') %></strong>
+                        <small>IDR <%= Number(item.line_total_idr || 0).toLocaleString('en-US') %></small>
                       </div>
                     </div>
 
@@ -154,7 +167,7 @@
               </div>
 
               <div class="cart-actions-bottom">
-                <button type="submit" class="primary-btn">Update Cart</button>
+                <button type="submit" class="primary-btn">Update Keranjang</button>
                 <a href="/shop" class="cart-continue-link">Lanjut Belanja</a>
               </div>
             </div>
@@ -167,17 +180,17 @@
 
             <div class="cart-summary-line">
               <span>Total THB</span>
-              <strong><%= cartTotals.total_thb.toLocaleString('en-US') %></strong>
+              <strong><%= Number(cartTotals.total_thb || 0).toLocaleString('en-US') %></strong>
             </div>
 
             <div class="cart-summary-line">
               <span>Total IDR</span>
-              <strong><%= cartTotals.total_idr.toLocaleString('en-US') %></strong>
+              <strong><%= Number(cartTotals.total_idr || 0).toLocaleString('en-US') %></strong>
             </div>
 
             <div class="cart-summary-actions">
               <a href="/checkout" class="primary-btn cart-checkout-btn">
-                Proceed to Checkout
+                Lanjut ke Checkout
               </a>
             </div>
           </div>
