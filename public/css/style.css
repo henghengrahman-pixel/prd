@@ -2965,3 +2965,63 @@ textarea.input {
 .footer-links li a .fa-telegram {
   color: #0088cc !important;
 }
+/* ========================================
+   CONTACT TELEGRAM UPDATE
+======================================== */
+
+.telegram-icon {
+  background: rgba(0, 136, 204, 0.10) !important;
+  color: #0088cc !important;
+}
+
+.contact-action-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.contact-action-btn {
+  width: 100%;
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.telegram-btn {
+  background: linear-gradient(135deg, #2aabee 0%, #0088cc 100%);
+  color: #fff;
+  box-shadow: 0 10px 20px rgba(0, 136, 204, 0.16);
+}
+
+.telegram-btn:hover,
+.telegram-btn:focus {
+  color: #fff;
+  opacity: 0.94;
+}
+
+.telegram-outline-btn {
+  background: #fff;
+  color: #0088cc;
+  border: 1px solid rgba(0, 136, 204, 0.20);
+  box-shadow: 0 8px 18px rgba(0, 136, 204, 0.08);
+}
+
+.telegram-outline-btn:hover,
+.telegram-outline-btn:focus {
+  color: #0088cc;
+  background: #f7fcff;
+}
+
+@media only screen and (max-width: 767px) {
+  .contact-action-btn {
+    min-height: 44px;
+    font-size: 12px;
+    padding: 0 14px;
+  }
+}
