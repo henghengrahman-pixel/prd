@@ -1,23 +1,23 @@
 <header class="site-header" itemscope itemtype="https://schema.org/Store">
   <meta itemprop="name" content="<%= settings.storeName %>">
+  <meta itemprop="url" content="<%= baseUrl %>">
   <% if (settings.logo) { %>
     <meta itemprop="image" content="<%= settings.logo %>">
   <% } %>
-  <meta itemprop="url" content="<%= baseUrl %>">
   <% if (settings.phone) { %>
     <meta itemprop="telephone" content="<%= settings.phone %>">
   <% } %>
 
   <% const cleanWhatsapp = settings.whatsapp ? String(settings.whatsapp).replace(/\D/g, '') : ''; %>
 
-  <div id="top-header">
-    <div class="container">
-      <div class="top-header-wrap">
-        <div class="top-header-left">
+  <header>
+    <div id="top-header">
+      <div class="container">
+        <div class="top-header-wrap">
           <ul class="header-links header-links-left">
             <% if (settings.phone) { %>
               <li>
-                <a href="tel:<%= settings.phone %>" aria-label="Hubungi <%= settings.storeName %> lewat telepon">
+                <a href="tel:<%= settings.phone %>" aria-label="Hubungi <%= settings.storeName %>">
                   <i class="fa fa-phone"></i>
                   <span><%= settings.phone %></span>
                 </a>
@@ -26,25 +26,18 @@
 
             <% if (settings.email) { %>
               <li>
-                <a href="mailto:<%= settings.email %>" aria-label="Kirim email ke <%= settings.storeName %>">
+                <a href="mailto:<%= settings.email %>" aria-label="Email <%= settings.storeName %>">
                   <i class="fa fa-envelope-o"></i>
                   <span><%= settings.email %></span>
                 </a>
               </li>
             <% } %>
           </ul>
-        </div>
 
-        <div class="top-header-right">
           <ul class="header-links header-links-right">
             <% if (cleanWhatsapp) { %>
               <li>
-                <a
-                  href="https://wa.me/<%= cleanWhatsapp %>"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Chat WhatsApp <%= settings.storeName %>"
-                >
+                <a href="https://wa.me/<%= cleanWhatsapp %>" target="_blank" rel="noopener noreferrer" aria-label="Chat WhatsApp <%= settings.storeName %>">
                   <i class="fa fa-whatsapp"></i>
                   <span>WhatsApp</span>
                 </a>
@@ -54,203 +47,186 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <div id="header">
-    <div class="container">
-      <div class="header-wrap">
-        <div class="header-logo">
-          <a href="/" class="logo" aria-label="Beranda <%= settings.storeName %>" itemprop="url">
-            <img
-              src="<%= settings.logo %>"
-              alt="Logo <%= settings.storeName %>"
-              loading="eager"
-              fetchpriority="high"
-              itemprop="logo"
-            >
-          </a>
-        </div>
-
-        <div class="header-search">
-          <form method="get" action="/shop" class="search-form" role="search" aria-label="Pencarian produk">
-            <label class="sr-only" for="desktop-search-input">Cari produk</label>
-            <input
-              id="desktop-search-input"
-              class="input"
-              type="text"
-              name="q"
-              value="<%= typeof query !== 'undefined' ? query : '' %>"
-              placeholder="Cari produk..."
-              autocomplete="off"
-              enterkeyhint="search"
-            >
-            <button class="search-btn" type="submit" aria-label="Cari produk">
-              Cari
-            </button>
-          </form>
-        </div>
-
-        <div class="header-ctn">
-          <% if (cleanWhatsapp) { %>
-            <div class="desktop-whatsapp-area">
-              <a
-                href="https://wa.me/<%= cleanWhatsapp %>"
-                class="desktop-whatsapp-link"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Chat WhatsApp"
+    <div id="header">
+      <div class="container">
+        <div class="header-wrap">
+          <div class="header-logo">
+            <a href="/" class="logo" aria-label="Beranda <%= settings.storeName %>" itemprop="url">
+              <img
+                src="<%= settings.logo %>"
+                alt="Logo <%= settings.storeName %>"
+                loading="eager"
+                fetchpriority="high"
+                itemprop="logo"
               >
-                <i class="fa fa-whatsapp"></i>
-                <span>WhatsApp</span>
-              </a>
-            </div>
-          <% } %>
-
-          <div class="cart-area">
-            <a href="/cart" class="cart-toggle" aria-label="Lihat keranjang belanja">
-              <i class="fa fa-shopping-cart"></i>
-              <span>Keranjang</span>
-              <div class="qty"><%= cartCount %></div>
             </a>
           </div>
 
-          <div class="menu-toggle">
-            <button
-              type="button"
-              id="mobile-menu-toggle"
-              class="menu-toggle-btn"
-              aria-label="Buka menu navigasi"
-              aria-controls="responsive-nav"
-              aria-expanded="false"
-            >
-              <i class="fa fa-bars"></i>
-              <span>Menu</span>
-            </button>
+          <div class="header-search">
+            <form method="get" action="/shop" class="search-form" role="search" aria-label="Cari produk">
+              <label class="sr-only" for="desktop-search-input">Cari produk</label>
+              <input
+                id="desktop-search-input"
+                class="input"
+                type="text"
+                name="q"
+                value="<%= typeof query !== 'undefined' ? query : '' %>"
+                placeholder="Cari produk..."
+                autocomplete="off"
+                enterkeyhint="search"
+              >
+              <button class="search-btn" type="submit" aria-label="Cari produk">Cari</button>
+            </form>
+          </div>
+
+          <div class="header-ctn">
+            <% if (cleanWhatsapp) { %>
+              <div class="desktop-whatsapp-area">
+                <a
+                  href="https://wa.me/<%= cleanWhatsapp %>"
+                  class="desktop-whatsapp-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Chat WhatsApp"
+                >
+                  <i class="fa fa-whatsapp"></i>
+                  <span>WhatsApp</span>
+                </a>
+              </div>
+            <% } %>
+
+            <div class="cart-area">
+              <a href="/cart" class="cart-toggle" aria-label="Lihat keranjang belanja">
+                <i class="fa fa-shopping-cart"></i>
+                <span>Keranjang</span>
+                <div class="qty"><%= cartCount %></div>
+              </a>
+            </div>
+
+            <div class="menu-toggle">
+              <button
+                type="button"
+                id="mobile-menu-toggle"
+                class="menu-toggle-btn"
+                aria-label="Buka menu"
+                aria-controls="responsive-nav"
+                aria-expanded="false"
+              >
+                <i class="fa fa-bars"></i>
+                <span>Menu</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<nav id="navigation" aria-label="Navigasi utama">
-  <div class="container">
-    <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+  <nav id="navigation" aria-label="Navigasi utama">
+    <div class="container">
+      <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
 
-    <div id="responsive-nav">
-      <div class="mobile-nav-header">
-        <div class="mobile-nav-brand">
-          <a href="/" aria-label="Beranda <%= settings.storeName %>">
-            <img src="<%= settings.logo %>" alt="Logo <%= settings.storeName %>">
-          </a>
+      <div id="responsive-nav">
+        <div class="mobile-nav-header">
+          <div class="mobile-nav-brand">
+            <a href="/" aria-label="Beranda <%= settings.storeName %>">
+              <img src="<%= settings.logo %>" alt="Logo <%= settings.storeName %>">
+            </a>
+          </div>
+
+          <button
+            type="button"
+            id="mobile-menu-close"
+            class="mobile-menu-close"
+            aria-label="Tutup menu"
+          >
+            <i class="fa fa-times"></i>
+          </button>
         </div>
 
-        <button
-          type="button"
-          id="mobile-menu-close"
-          class="mobile-menu-close"
-          aria-label="Tutup menu"
-        >
-          <i class="fa fa-times"></i>
-        </button>
+        <ul class="main-nav nav navbar-nav">
+          <li class="<%= currentPath === '/' ? 'active' : '' %>"><a href="/">Home</a></li>
+          <li class="<%= currentPath.startsWith('/shop') ? 'active' : '' %>"><a href="/shop">Shop</a></li>
+          <li class="<%= currentPath.startsWith('/articles') ? 'active' : '' %>"><a href="/articles">Artikel</a></li>
+          <li class="<%= currentPath.startsWith('/contact') ? 'active' : '' %>"><a href="/contact">Kontak</a></li>
+          <li class="<%= currentPath.startsWith('/cart') ? 'active' : '' %>"><a href="/cart">Cart</a></li>
+        </ul>
+
+        <div class="mobile-nav-extra">
+          <% if (settings.phone) { %>
+            <a href="tel:<%= settings.phone %>" class="mobile-nav-contact">
+              <i class="fa fa-phone"></i>
+              <span><%= settings.phone %></span>
+            </a>
+          <% } %>
+
+          <% if (cleanWhatsapp) { %>
+            <a href="https://wa.me/<%= cleanWhatsapp %>" target="_blank" rel="noopener noreferrer" class="mobile-nav-contact">
+              <i class="fa fa-whatsapp"></i>
+              <span>Chat WhatsApp</span>
+            </a>
+          <% } %>
+        </div>
       </div>
+    </div>
+  </nav>
 
-      <ul class="main-nav nav navbar-nav">
-        <li class="<%= currentPath === '/' ? 'active' : '' %>">
-          <a href="/">Home</a>
-        </li>
-        <li class="<%= currentPath.startsWith('/shop') ? 'active' : '' %>">
-          <a href="/shop">Shop</a>
-        </li>
-        <li class="<%= currentPath.startsWith('/articles') ? 'active' : '' %>">
-          <a href="/articles">Artikel</a>
-        </li>
-        <li class="<%= currentPath.startsWith('/contact') ? 'active' : '' %>">
-          <a href="/contact">Kontak</a>
-        </li>
-        <li class="<%= currentPath.startsWith('/cart') ? 'active' : '' %>">
-          <a href="/cart">Cart</a>
-        </li>
-      </ul>
+  <div class="mobile-header-bar">
+    <div class="mobile-header-inner">
+      <a href="/" class="mobile-brand" aria-label="Beranda <%= settings.storeName %>">
+        <img
+          src="<%= settings.logo %>"
+          alt="Logo <%= settings.storeName %>"
+          loading="eager"
+          fetchpriority="high"
+        >
+      </a>
 
-      <div class="mobile-nav-extra">
-        <% if (settings.phone) { %>
-          <a href="tel:<%= settings.phone %>" class="mobile-nav-contact">
-            <i class="fa fa-phone"></i>
-            <span><%= settings.phone %></span>
-          </a>
-        <% } %>
+      <div class="mobile-header-main">
+        <form method="get" action="/shop" class="mobile-search-form" role="search" aria-label="Cari produk mobile">
+          <button type="submit" class="mobile-search-icon" aria-label="Cari">
+            <i class="fa fa-search"></i>
+          </button>
 
-        <% if (cleanWhatsapp) { %>
-          <a
-            href="https://wa.me/<%= cleanWhatsapp %>"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="mobile-nav-contact"
+          <label class="sr-only" for="mobile-search-input">Cari produk atau toko</label>
+          <input
+            id="mobile-search-input"
+            type="text"
+            name="q"
+            value="<%= typeof query !== 'undefined' ? query : '' %>"
+            placeholder="Cari produk atau toko"
+            autocomplete="off"
+            enterkeyhint="search"
           >
-            <i class="fa fa-whatsapp"></i>
-            <span>Chat WhatsApp</span>
+        </form>
+
+        <div class="mobile-header-actions">
+          <a href="/cart" class="mobile-header-icon" aria-label="Keranjang">
+            <i class="fa fa-shopping-cart"></i>
+            <span class="mobile-badge"><%= cartCount %></span>
           </a>
-        <% } %>
+
+          <button
+            type="button"
+            id="mobile-menu-toggle-sticky"
+            class="mobile-header-icon mobile-header-button"
+            aria-label="Buka menu"
+            aria-controls="responsive-nav"
+            aria-expanded="false"
+          >
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</nav>
 
-<div class="mobile-header-bar">
-  <div class="mobile-header-inner">
-    <a href="/" class="mobile-brand" aria-label="Beranda <%= settings.storeName %>">
-      <img
-        src="<%= settings.logo %>"
-        alt="Logo <%= settings.storeName %>"
-        loading="eager"
-        fetchpriority="high"
-      >
-    </a>
-
-    <div class="mobile-header-main">
-      <form method="get" action="/shop" class="mobile-search-form" role="search" aria-label="Pencarian produk mobile">
-        <button type="submit" class="mobile-search-icon" aria-label="Cari">
-          <i class="fa fa-search"></i>
-        </button>
-
-        <label class="sr-only" for="mobile-search-input">Cari produk atau toko</label>
-        <input
-          id="mobile-search-input"
-          type="text"
-          name="q"
-          value="<%= typeof query !== 'undefined' ? query : '' %>"
-          placeholder="Cari produk atau toko"
-          autocomplete="off"
-          enterkeyhint="search"
-        >
-      </form>
-
-      <div class="mobile-header-actions">
-        <a href="/cart" class="mobile-header-icon" aria-label="Keranjang">
-          <i class="fa fa-shopping-cart"></i>
-          <span class="mobile-badge"><%= cartCount %></span>
-        </a>
-
-        <button
-          type="button"
-          id="mobile-menu-toggle-sticky"
-          class="mobile-header-icon mobile-header-button"
-          aria-label="Buka menu"
-          aria-controls="responsive-nav"
-          aria-expanded="false"
-        >
-          <i class="fa fa-bars"></i>
-        </button>
-      </div>
+  <div class="section flash-section">
+    <div class="container">
+      <% if (flash) { %>
+        <div class="alert alert-<%= flash.type %> flash-alert"><%= flash.message %></div>
+      <% } %>
     </div>
   </div>
-</div>
-
-<div class="section flash-section">
-  <div class="container">
-    <% if (flash) { %>
-      <div class="alert alert-<%= flash.type %> flash-alert"><%= flash.message %></div>
-    <% } %>
-  </div>
-</div>
+</header>
