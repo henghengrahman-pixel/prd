@@ -2916,3 +2916,45 @@ textarea.input {
     padding: 0 14px;
   }
 }
+/* ========================================
+   HEADER TELEGRAM UPDATE
+======================================== */
+
+.header-links li a .fa-telegram,
+.mobile-menu-extra-link .fa-telegram {
+  color: #0088cc !important;
+}
+
+.mobile-menu-extra {
+  padding: 10px 12px 16px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  margin-top: 8px;
+}
+
+.mobile-menu-extra-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.mobile-menu-extra-link:hover,
+.mobile-menu-extra-link:focus {
+  color: #fff;
+  background: rgba(255,255,255,0.08);
+}
+
+.mobile-menu-extra-link i {
+  width: 18px;
+  text-align: center;
+}
+
+@media only screen and (max-width: 991px) {
+  .mobile-menu-extra {
+    display: block;
+  }
+}
