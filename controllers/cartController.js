@@ -33,4 +33,22 @@ function addOrUpdateCartItem(cart, product, quantity) {
 
 function addToCart(req, res) {
   const { product_id, qty = 1 } = req.body;
- 
+  const product = getProductById(product_id);
+
+  if (!product || !product.visible) {
+    setFlash(req, 'danger', 'Product not found.');
+    return res.redirect('/shop');
+  }
+
+  if (product.status === 'sold_out') {
+    setFlash(req, 'danger', 'Produk sold out tidak bisa dimasukkan ke cart.');
+    return res.redirect(`/product/${product.slug}`);
+  }
+
+  const quantity = Math.max(1, Number(qty || 1));
+  const cart = getCart(req);
+
+  addOrUpdateCartItem(cart, product, quantity);
+  saveCart(req, cart);
+
+  setFlash(req, 'success', 'Produk berhasil ditambahkan ke ker
