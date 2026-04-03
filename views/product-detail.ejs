@@ -3,6 +3,20 @@
 
 <section class="section product-detail-section">
   <div class="container">
+    <div class="product-breadcrumb">
+      <a href="/">Home</a>
+      <span>/</span>
+      <a href="/shop">Shop</a>
+      <% if (product.category) { %>
+        <span>/</span>
+        <a href="/shop?category=<%= encodeURIComponent(product.category) %>">
+          <%= product.category %>
+        </a>
+      <% } %>
+      <span>/</span>
+      <span><%= product.name %></span>
+    </div>
+
     <div class="row product-detail-row">
       <div class="col-md-7 col-sm-12 col-xs-12 product-gallery-column">
         <div class="product-gallery-wrap">
@@ -31,7 +45,6 @@
               type="button"
               class="product-thumb-item active"
               data-image="<%= product.thumbnail %>"
-              aria-label="Gambar utama <%= product.name %>"
             >
               <img src="<%= product.thumbnail %>" alt="<%= product.name %>" loading="lazy">
             </button>
@@ -43,7 +56,6 @@
                     type="button"
                     class="product-thumb-item"
                     data-image="<%= img %>"
-                    aria-label="Thumbnail <%= product.name %>"
                   >
                     <img src="<%= img %>" alt="<%= product.name %>" loading="lazy">
                   </button>
@@ -71,7 +83,6 @@
                   <% if (product.compare_price_thb) { %>
                     THB <%= Number(product.compare_price_thb || 0).toLocaleString('en-US') %>
                   <% } %>
-
                   <% if (product.compare_price_idr) { %>
                     | IDR <%= Number(product.compare_price_idr || 0).toLocaleString('en-US') %>
                   <% } %>
@@ -90,13 +101,8 @@
 
           <div class="product-buy-actions">
             <% if (product.status === 'sold_out') { %>
-              <button class="buy-now-btn" type="button" disabled>
-                Sold Out
-              </button>
-
-              <button class="add-to-cart-btn" type="button" disabled>
-                Sold Out
-              </button>
+              <button class="buy-now-btn" type="button" disabled>Sold Out</button>
+              <button class="add-to-cart-btn" type="button" disabled>Sold Out</button>
             <% } else { %>
               <form method="post" action="/buy-now" class="buy-now-form">
                 <input type="hidden" name="product_id" value="<%= product.id %>">
@@ -108,32 +114,24 @@
 
               <form method="post" action="/cart/add" class="add-to-cart-form">
                 <input type="hidden" name="product_id" value="<%= product.id %>">
-
-                <label class="sr-only" for="qty-input">Jumlah</label>
-                <input
-                  id="qty-input"
-                  type="number"
-                  name="qty"
-                  value="1"
-                  min="1"
-                  class="input qty-input"
-                >
-
+                <input type="number" name="qty" value="1" min="1" class="input qty-input">
                 <button class="add-to-cart-btn" type="submit">
-                  <i class="fa fa-shopping-cart"></i> TAMBAHKAN KE KERANJANG
+                  <i class="fa fa-shopping-cart"></i> Tambah ke Keranjang
                 </button>
               </form>
             <% } %>
           </div>
 
-          <ul class="product-links">
-            <li>Category:</li>
-            <li>
-              <a href="/shop?category=<%= encodeURIComponent(product.category) %>">
-                <%= product.category %>
-              </a>
-            </li>
-          </ul>
+          <% if (product.category) { %>
+            <ul class="product-links">
+              <li>Category:</li>
+              <li>
+                <a href="/shop?category=<%= encodeURIComponent(product.category) %>">
+                  <%= product.category %>
+                </a>
+              </li>
+            </ul>
+          <% } %>
 
           <% if (product.brand) { %>
             <ul class="product-links">
@@ -143,13 +141,13 @@
           <% } %>
 
           <% if (product.description) { %>
-            <div class="mt-15 product-description-content">
+            <div class="product-description-content mt-15">
               <%- product.description %>
             </div>
           <% } %>
 
           <% if (product.details) { %>
-            <div class="mt-15 product-details-content">
+            <div class="product-details-content mt-15">
               <%- product.details %>
             </div>
           <% } %>
@@ -161,13 +159,11 @@
 
 <section class="section recommended-products-section">
   <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="section-title">
-          <h2 class="title">Recommended Products</h2>
-        </div>
-      </div>
+    <div class="section-title">
+      <h2 class="title">Produk Rekomendasi</h2>
+    </div>
 
+    <div class="row">
       <% if (recommended && recommended.length) { %>
         <% recommended.forEach(function(product){ %>
           <div class="col-md-3 col-sm-6 col-xs-6">
@@ -184,147 +180,5 @@
     </div>
   </div>
 </section>
-
-<div class="product-image-modal" id="product-image-modal" aria-hidden="true">
-  <div class="product-image-modal-backdrop" id="product-image-modal-backdrop"></div>
-  <div class="product-image-modal-dialog" role="dialog" aria-modal="true" aria-label="Preview gambar produk">
-    <button type="button" class="product-image-modal-close" id="close-image-popup" aria-label="Tutup preview">
-      <i class="fa fa-times"></i>
-    </button>
-    <img id="popup-product-image" src="<%= product.thumbnail %>" alt="<%= product.name %>">
-  </div>
-</div>
-
-<% if (product.status !== 'sold_out') { %>
-  <div class="mobile-buy-bar">
-    <div class="mobile-buy-bar-inner">
-      <div class="mobile-buy-price">
-        THB <%= Number(product.price_thb || 0).toLocaleString('en-US') %>
-      </div>
-
-      <form method="post" action="/buy-now" class="mobile-buy-now-form">
-        <input type="hidden" name="product_id" value="<%= product.id %>">
-        <input type="hidden" name="qty" value="1">
-        <button type="submit" class="mobile-buy-now">
-          Beli Sekarang
-        </button>
-      </form>
-
-      <form method="post" action="/cart/add" class="mobile-add-cart-form">
-        <input type="hidden" name="product_id" value="<%= product.id %>">
-        <input type="hidden" name="qty" value="1">
-        <button class="mobile-add-cart" type="submit">
-          Cart
-        </button>
-      </form>
-    </div>
-  </div>
-<% } %>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var mainImage = document.getElementById('main-product-image');
-    var popupImage = document.getElementById('popup-product-image');
-    var thumbs = Array.prototype.slice.call(document.querySelectorAll('.product-thumb-item'));
-    var modal = document.getElementById('product-image-modal');
-    var openPopupBtn = document.getElementById('open-image-popup');
-    var closePopupBtn = document.getElementById('close-image-popup');
-    var modalBackdrop = document.getElementById('product-image-modal-backdrop');
-    var mainPreview = document.getElementById('product-main-preview');
-
-    if (!mainImage || !thumbs.length || !mainPreview) return;
-
-    var currentIndex = 0;
-    var touchStartX = 0;
-    var touchEndX = 0;
-
-    function updateActiveThumb(index) {
-      currentIndex = index;
-
-      thumbs.forEach(function (item, i) {
-        item.classList.toggle('active', i === index);
-      });
-
-      var newImage = thumbs[index].getAttribute('data-image');
-      mainImage.setAttribute('src', newImage);
-
-      if (popupImage) {
-        popupImage.setAttribute('src', newImage);
-      }
-
-      if (window.innerWidth <= 767) {
-        thumbs[index].scrollIntoView({
-          behavior: 'smooth',
-          inline: 'center',
-          block: 'nearest'
-        });
-      }
-    }
-
-    thumbs.forEach(function (thumb, index) {
-      thumb.addEventListener('click', function () {
-        updateActiveThumb(index);
-      });
-    });
-
-    function showNextImage() {
-      var nextIndex = currentIndex + 1;
-      if (nextIndex >= thumbs.length) nextIndex = 0;
-      updateActiveThumb(nextIndex);
-    }
-
-    function showPrevImage() {
-      var prevIndex = currentIndex - 1;
-      if (prevIndex < 0) prevIndex = thumbs.length - 1;
-      updateActiveThumb(prevIndex);
-    }
-
-    function openModal() {
-      if (!modal) return;
-      modal.classList.add('is-open');
-      document.body.classList.add('modal-open');
-
-      if (popupImage) {
-        popupImage.setAttribute('src', mainImage.getAttribute('src'));
-      }
-    }
-
-    function closeModal() {
-      if (!modal) return;
-      modal.classList.remove('is-open');
-      document.body.classList.remove('modal-open');
-    }
-
-    if (openPopupBtn) openPopupBtn.addEventListener('click', openModal);
-    mainImage.addEventListener('click', openModal);
-    if (closePopupBtn) closePopupBtn.addEventListener('click', closeModal);
-    if (modalBackdrop) modalBackdrop.addEventListener('click', closeModal);
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeModal();
-      if (e.key === 'ArrowRight') showNextImage();
-      if (e.key === 'ArrowLeft') showPrevImage();
-    });
-
-    mainPreview.addEventListener('touchstart', function (e) {
-      touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-
-    mainPreview.addEventListener('touchend', function (e) {
-      touchEndX = e.changedTouches[0].screenX;
-      var diff = touchEndX - touchStartX;
-
-      if (Math.abs(diff) < 40) return;
-
-      if (diff < 0) {
-        showNextImage();
-      } else {
-        showPrevImage();
-      }
-    }, { passive: true });
-
-    updateActiveThumb(0);
-  });
-</script>
 
 <%- include('partials/footer') %>
