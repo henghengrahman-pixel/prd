@@ -23,7 +23,8 @@
         <div class="col-md-8 col-sm-12 col-xs-12">
           <form method="post" action="/cart/update" class="cart-update-form">
             <div class="cart-items-card">
-              <div class="cart-table-responsive">
+
+              <div class="cart-table-responsive desktop-cart-view">
                 <table class="table cart-table">
                   <thead>
                     <tr>
@@ -92,6 +93,64 @@
                     <% }) %>
                   </tbody>
                 </table>
+              </div>
+
+              <div class="mobile-cart-list">
+                <% cart.forEach(function(item){ %>
+                  <div class="mobile-cart-card">
+                    <div class="mobile-cart-top">
+                      <a href="/product/<%= item.slug || '' %>" class="mobile-cart-thumb">
+                        <img src="<%= item.thumbnail %>" alt="<%= item.name %>">
+                      </a>
+
+                      <div class="mobile-cart-info">
+                        <h3 class="mobile-cart-name">
+                          <% if (item.slug) { %>
+                            <a href="/product/<%= item.slug %>"><%= item.name %></a>
+                          <% } else { %>
+                            <span><%= item.name %></span>
+                          <% } %>
+                        </h3>
+
+                        <div class="mobile-cart-price">
+                          <span>THB <%= item.price_thb.toLocaleString('en-US') %></span>
+                          <small>IDR <%= item.price_idr.toLocaleString('en-US') %></small>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="mobile-cart-bottom">
+                      <div class="mobile-cart-qty-wrap">
+                        <label for="mobile-qty-<%= item.product_id %>">Qty</label>
+                        <input
+                          id="mobile-qty-<%= item.product_id %>"
+                          type="number"
+                          class="input cart-qty-input"
+                          name="qty[<%= item.product_id %>]"
+                          min="1"
+                          value="<%= item.qty %>"
+                        >
+                      </div>
+
+                      <div class="mobile-cart-total">
+                        <span>Total</span>
+                        <strong>THB <%= item.line_total_thb.toLocaleString('en-US') %></strong>
+                        <small>IDR <%= item.line_total_idr.toLocaleString('en-US') %></small>
+                      </div>
+                    </div>
+
+                    <div class="mobile-cart-actions">
+                      <button
+                        type="submit"
+                        class="cart-remove-btn"
+                        formaction="/cart/remove/<%= item.product_id %>"
+                        formmethod="post"
+                      >
+                        Hapus
+                      </button>
+                    </div>
+                  </div>
+                <% }) %>
               </div>
 
               <div class="cart-actions-bottom">
