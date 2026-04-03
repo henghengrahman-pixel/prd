@@ -86,12 +86,20 @@
             <p class="product-short-description"><%= product.short_description %></p>
           <% } %>
 
-          <div class="add-to-cart">
+          <div class="product-buy-actions">
             <% if (product.status === 'sold_out') { %>
+              <button class="buy-now-btn" type="button" disabled>
+                Sold Out
+              </button>
+
               <button class="add-to-cart-btn" type="button" disabled>
-                <i class="fa fa-ban"></i> Sold Out
+                Sold Out
               </button>
             <% } else { %>
+              <a href="/checkout?product_id=<%= product.id %>&qty=1" class="buy-now-btn">
+                Beli Sekarang
+              </a>
+
               <form method="post" action="/cart/add" class="add-to-cart-form">
                 <input type="hidden" name="product_id" value="<%= product.id %>">
                 <label class="sr-only" for="qty-input">Jumlah</label>
@@ -172,6 +180,28 @@
     <img id="popup-product-image" src="<%= product.thumbnail %>" alt="<%= product.name %>">
   </div>
 </div>
+
+<% if (product.status !== 'sold_out') { %>
+<div class="mobile-buy-bar">
+  <div class="mobile-buy-bar-inner">
+    <div class="mobile-buy-price">
+      THB <%= product.price_thb.toLocaleString('en-US') %>
+    </div>
+
+    <a href="/checkout?product_id=<%= product.id %>&qty=1" class="mobile-buy-now">
+      Beli Sekarang
+    </a>
+
+    <form method="post" action="/cart/add">
+      <input type="hidden" name="product_id" value="<%= product.id %>">
+      <input type="hidden" name="qty" value="1">
+      <button class="mobile-add-cart" type="submit">
+        Cart
+      </button>
+    </form>
+  </div>
+</div>
+<% } %>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
