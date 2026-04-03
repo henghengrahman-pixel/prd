@@ -1585,3 +1585,92 @@ textarea.input {
     font-size: 10px !important;
   }
 }
+
+/* ========================================
+   PRODUCT DETAIL MOBILE BUY BAR
+======================================== */
+
+.product-buy-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.product-buy-actions .buy-now-btn {
+  width: 100%;
+  min-height: 46px;
+  border-radius: 999px;
+  background: #1f2947;
+  color: #fff;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-buy-actions .add-to-cart-btn {
+  width: 100%;
+  min-height: 44px;
+}
+
+/* sticky buy bar mobile */
+.mobile-buy-bar {
+  display: none;
+}
+
+@media only screen and (max-width: 767px) {
+  .mobile-buy-bar {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 1px solid #e5e7eb;
+    z-index: 9999;
+    padding: 8px;
+  }
+
+  .mobile-buy-bar-inner {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .mobile-buy-price {
+    font-weight: 700;
+    color: #1f2947;
+    font-size: 14px;
+    padding: 0 6px;
+  }
+
+  .mobile-buy-now {
+    height: 42px;
+    border-radius: 999px;
+    background: #1f2947;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .mobile-add-cart {
+    height: 42px;
+    border-radius: 999px;
+    border: none;
+    background: #ff1f43;
+    color: #fff;
+    font-size: 12px;
+    padding: 0 14px;
+    font-weight: 700;
+  }
+
+  /* biar konten tidak ketutup sticky bar */
+  body {
+    padding-bottom: 70px;
+  }
+}
