@@ -2731,3 +2731,161 @@ textarea.input {
     font-size: 18px;
   }
 }
+/* ========================================
+   CHECKOUT PAGE
+======================================== */
+
+.checkout-page-section {
+  padding-top: 28px;
+  padding-bottom: 34px;
+}
+
+.checkout-page-header {
+  margin-bottom: 18px;
+}
+
+.checkout-page-subtitle {
+  max-width: 760px;
+  margin: -4px 0 0;
+  color: #6b7280;
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+.checkout-form-card,
+.checkout-summary-card {
+  background: #fff;
+  border: 1px solid #ececf1;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+}
+
+.checkout-form-card {
+  padding: 22px 20px;
+}
+
+.checkout-summary-card {
+  padding: 22px 18px;
+}
+
+.checkout-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1f2947;
+}
+
+.checkout-form .form-group {
+  margin-bottom: 16px;
+}
+
+.checkout-form textarea.input {
+  min-height: 120px;
+}
+
+.checkout-submit-btn {
+  width: 100%;
+  min-height: 48px;
+}
+
+.order-summary {
+  width: 100%;
+}
+
+.order-col {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #ececf1;
+}
+
+.order-head {
+  padding-top: 0;
+}
+
+.order-products .order-col:last-child {
+  border-bottom: 1px solid #ececf1;
+}
+
+.checkout-order-product {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  line-height: 1.6;
+  color: #1f2947;
+}
+
+.checkout-order-qty {
+  font-weight: 700;
+  color: #D10024;
+}
+
+.order-total {
+  color: #D10024;
+}
+
+.checkout-summary-note {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f8fafc;
+  color: #6b7280;
+  line-height: 1.7;
+  font-size: 13px;
+}
+
+@media only screen and (max-width: 991px) {
+  .checkout-summary-card {
+    margin-top: 18px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .checkout-page-section {
+    padding-top: 22px;
+    padding-bottom: 26px;
+  }
+
+  .checkout-page-header {
+    margin-bottom: 14px;
+  }
+
+  .checkout-page-subtitle {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .checkout-form-card,
+  .checkout-summary-card {
+    border-radius: 14px;
+  }
+
+  .checkout-form-card {
+    padding: 16px 14px;
+  }
+
+  .checkout-summary-card {
+    padding: 18px 14px;
+  }
+
+  .checkout-label {
+    font-size: 12px;
+  }
+
+  .checkout-submit-btn {
+    min-height: 44px;
+  }
+
+  .order-col {
+    font-size: 13px;
+    padding: 10px 0;
+  }
+
+  .checkout-summary-note {
+    font-size: 12px;
+    padding: 10px 12px;
+  }
+}
