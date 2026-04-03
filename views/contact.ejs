@@ -3,16 +3,13 @@
 
 <section class="section contact-page-section">
   <div class="container">
-    <div class="contact-page-header">
-      <div class="section-title">
-        <h1 class="title">Kontak Kami</h1>
-      </div>
-      <p class="contact-page-subtitle">
-        Jika ada pertanyaan, pemesanan, atau ingin informasi lebih lanjut, silakan hubungi kami melalui kontak di bawah ini.
-      </p>
-    </div>
-
     <div class="row">
+      <div class="col-md-12">
+        <div class="section-title">
+          <h1 class="title">Kontak Kami</h1>
+        </div>
+      </div>
+
       <div class="col-md-6 col-sm-12 col-xs-12">
         <div class="admin-card contact-page-card">
           <h3 class="contact-card-title">Informasi Kontak</h3>
@@ -50,6 +47,22 @@
               </li>
             <% } %>
 
+            <% if (settings.telegramChannel) { %>
+              <li>
+                <span class="contact-icon telegram-icon"><i class="fa fa-telegram"></i></span>
+                <div class="contact-text">
+                  <span class="contact-label">Channel / Grup Store</span>
+                  <a
+                    href="https://t.me/<%= String(settings.telegramChannel).replace(/^@/, '') %>"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Gabung di @<%= String(settings.telegramChannel).replace(/^@/, '') %>
+                  </a>
+                </div>
+              </li>
+            <% } %>
+
             <% if (settings.email) { %>
               <li>
                 <span class="contact-icon"><i class="fa fa-envelope-o"></i></span>
@@ -77,9 +90,7 @@
         <div class="admin-card contact-page-card">
           <h3 class="contact-card-title">Tentang Toko</h3>
           <p class="contact-about-text">
-            <%= settings.seo && settings.seo.metaDescription
-              ? settings.seo.metaDescription
-              : 'Selamat datang di toko kami. Kami menyediakan berbagai produk pilihan dengan kualitas terbaik dan pelayanan yang cepat serta terpercaya.' %>
+            <%= settings.seo && settings.seo.metaDescription ? settings.seo.metaDescription : 'Selamat datang di toko kami. Kami siap membantu kebutuhan belanja Anda dengan pelayanan terbaik.' %>
           </p>
 
           <div class="contact-action-box contact-action-stack">
@@ -91,7 +102,7 @@
                 class="primary-btn contact-action-btn"
               >
                 <i class="fa fa-whatsapp"></i>
-                <span>Chat WhatsApp</span>
+                <span>Hubungi via WhatsApp</span>
               </a>
             <% } %>
 
@@ -103,7 +114,7 @@
                 class="telegram-btn contact-action-btn"
               >
                 <i class="fa fa-telegram"></i>
-                <span>Chat Telegram</span>
+                <span>Chat via Telegram</span>
               </a>
             <% } %>
 
@@ -115,7 +126,7 @@
                 class="telegram-outline-btn contact-action-btn"
               >
                 <i class="fa fa-telegram"></i>
-                <span>Gabung Channel Store</span>
+                <span>Ayo Gabung di Store Telegram Kami</span>
               </a>
             <% } %>
           </div>
