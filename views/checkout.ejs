@@ -88,7 +88,7 @@
               <h3 class="title">Ringkasan Pesanan</h3>
             </div>
 
-            <div class="order-summary">
+            <div class="order-summary desktop-checkout-summary">
               <div class="order-col order-head">
                 <div><strong>Produk</strong></div>
                 <div><strong>Total</strong></div>
@@ -134,6 +134,40 @@
                   <strong class="order-total">
                     IDR <%= Number(cartTotals.total_idr || 0).toLocaleString('en-US') %>
                   </strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="mobile-checkout-summary">
+              <% cart.forEach(function(item) { %>
+                <div class="mobile-checkout-card">
+                  <div class="mobile-checkout-row">
+                    <div class="mobile-checkout-name">
+                      <span class="checkout-order-qty"><%= item.qty %>x</span>
+                      <span><%= item.name %></span>
+                    </div>
+                    <div class="mobile-checkout-total">
+                      THB <%= Number(item.line_total_thb || 0).toLocaleString('en-US') %>
+                    </div>
+                  </div>
+
+                  <% if (item.price_idr) { %>
+                    <div class="mobile-checkout-sub">
+                      IDR <%= Number(item.price_idr || 0).toLocaleString('en-US') %> / pcs
+                      <span>IDR <%= Number(item.line_total_idr || 0).toLocaleString('en-US') %></span>
+                    </div>
+                  <% } %>
+                </div>
+              <% }) %>
+
+              <div class="mobile-checkout-grand">
+                <div class="mobile-checkout-grand-line">
+                  <span>Total THB</span>
+                  <strong>THB <%= Number(cartTotals.total_thb || 0).toLocaleString('en-US') %></strong>
+                </div>
+                <div class="mobile-checkout-grand-line">
+                  <span>Total IDR</span>
+                  <strong>IDR <%= Number(cartTotals.total_idr || 0).toLocaleString('en-US') %></strong>
                 </div>
               </div>
             </div>
