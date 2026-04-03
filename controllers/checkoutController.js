@@ -27,30 +27,55 @@ async function placeOrder(req, res) {
     return res.redirect('/cart');
   }
 
-  if (cart.some(item => item.status === 'sold_out')) {
+  if (cart.some((item) => item.status === 'sold_out')) {
     setFlash(req, 'danger', 'Ada produk sold out di keranjang.');
     return res.redirect('/cart');
   }
 
-  let { customer_name, whatsapp, address, note } = req.body;
+  let {
+    customer_name,
+    whatsapp,
+    telegram,
+    address,
+    note
+  } = req.body;
 
   customer_name = String(customer_name || '').trim();
   whatsapp = String(whatsapp || '').trim();
+  telegram = String(telegram || '').trim();
   address = String(address || '').trim();
   note = String(note || '').trim();
 
-  if (!customer_name || !whatsapp || !address) {
-    setFlash(req, 'danger', 'Nama, WhatsApp, dan alamat wajib diisi.');
+  if (!customer_name || !address) {
+    setFlash(req, 'danger', 'Nama lengkap dan alamat wajib diisi.');
     return res.redirect('/checkout');
   }
 
-  whatsapp = whatsapp.replace(/[^\d+]/g, '');
+  if (!whatsapp && !telegram) {
+    setFlash(req, 'danger', 'Isi minimal satu kontak: WhatsApp atau Telegram.');
+    return res.redirect('/checkout');
+  }
+
+  if (whatsapp) {
+    whatsapp = whatsapp.replace(/[^\d+]/g, '');
+  }
+
+  if (telegram) {
+    telegram = telegram.replace(/\s+/g, '');
+    telegram = telegram.replace(/^@+/, '');
+  }
+
+  if (!whatsapp && !telegram) {
+    setFlash(req, 'danger', 'Kontak tidak valid. Isi WhatsApp atau Telegram dengan benar.');
+    return res.redirect('/checkout');
+  }
 
   const totals = cartTotals(cart);
 
   const orderPayload = {
     customer_name,
     whatsapp,
+    telegram,
     address,
     note,
     items: cart,
