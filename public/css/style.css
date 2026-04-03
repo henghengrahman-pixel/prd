@@ -2958,3 +2958,10 @@ textarea.input {
     display: block;
   }
 }
+/* ========================================
+   FOOTER TELEGRAM UPDATE
+======================================== */
+
+.footer-links li a .fa-telegram {
+  color: #0088cc !important;
+}
