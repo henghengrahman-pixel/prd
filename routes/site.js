@@ -12,6 +12,7 @@ router.get('/contact', siteController.contact);
 
 router.get('/cart', cartController.cartPage);
 router.post('/cart/add', cartController.addToCart);
+router.post('/buy-now', cartController.buyNow);
 router.post('/cart/update', cartController.updateCart);
 router.post('/cart/remove/:productId', cartController.removeFromCart);
 
