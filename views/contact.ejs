@@ -1,4 +1,88 @@
 <%- include('partials/head') %>
 <%- include('partials/header') %>
-<div class="section"><div class="container"><div class="row"><div class="col-md-6"><div class="admin-card"><h3>Kontak</h3><p>WhatsApp: <%= settings.whatsapp %></p><p>Phone: <%= settings.phone %></p><p>Email: <%= settings.email %></p><p>Address: <%= settings.address %></p></div></div><div class="col-md-6"><div class="admin-card"><h3>Tentang Toko</h3><p><%= settings.seo.metaDescription %></p></div></div></div></div></div>
+
+<section class="section contact-page-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section-title">
+          <h1 class="title">Kontak Kami</h1>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12 col-xs-12">
+        <div class="admin-card contact-page-card">
+          <h3 class="contact-card-title">Informasi Kontak</h3>
+
+          <ul class="contact-info-list">
+            <% if (settings.whatsapp) { %>
+              <li>
+                <span class="contact-icon"><i class="fa fa-whatsapp"></i></span>
+                <div class="contact-text">
+                  <span class="contact-label">WhatsApp</span>
+                  <a href="https://wa.me/<%= String(settings.whatsapp).replace(/\D/g, '') %>" target="_blank" rel="noopener noreferrer">
+                    <%= settings.whatsapp %>
+                  </a>
+                </div>
+              </li>
+            <% } %>
+
+            <% if (settings.phone) { %>
+              <li>
+                <span class="contact-icon"><i class="fa fa-phone"></i></span>
+                <div class="contact-text">
+                  <span class="contact-label">Telepon</span>
+                  <a href="tel:<%= settings.phone %>"><%= settings.phone %></a>
+                </div>
+              </li>
+            <% } %>
+
+            <% if (settings.email) { %>
+              <li>
+                <span class="contact-icon"><i class="fa fa-envelope-o"></i></span>
+                <div class="contact-text">
+                  <span class="contact-label">Email</span>
+                  <a href="mailto:<%= settings.email %>"><%= settings.email %></a>
+                </div>
+              </li>
+            <% } %>
+
+            <% if (settings.address) { %>
+              <li>
+                <span class="contact-icon"><i class="fa fa-map-marker"></i></span>
+                <div class="contact-text">
+                  <span class="contact-label">Alamat</span>
+                  <span><%= settings.address %></span>
+                </div>
+              </li>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12 col-xs-12">
+        <div class="admin-card contact-page-card">
+          <h3 class="contact-card-title">Tentang Toko</h3>
+          <p class="contact-about-text">
+            <%= settings.seo && settings.seo.metaDescription ? settings.seo.metaDescription : 'Selamat datang di toko kami. Kami siap membantu kebutuhan belanja Anda dengan pelayanan terbaik.' %>
+          </p>
+
+          <div class="contact-action-box">
+            <% if (settings.whatsapp) { %>
+              <a
+                href="https://wa.me/<%= String(settings.whatsapp).replace(/\D/g, '') %>"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="primary-btn"
+              >
+                Hubungi via WhatsApp
+              </a>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <%- include('partials/footer') %>
